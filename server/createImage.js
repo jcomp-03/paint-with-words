@@ -19,12 +19,14 @@ const createImage = async (prompt, number, size) => {
       size: size,
     });
     // log to console
-    console.log(response.data.data[0].url + "\n\n" + response.data.data[1].url);
+    console.log(response.data.data[0].url + "\n\n");
     // return data
     return data;
   } catch (error) {
     console.error('Something unexpected or undesired happened.\n', error);
   }
 };
+
+// createImage('A dog riding a surfboard in turbulent water, as a pencil drawing.', 1, '1024x1024');
 
 export default createImage;

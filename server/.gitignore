@@ -1,8 +1,9 @@
 fetchImage.js
 .env
-editImage.js
-extendImage.js
-
-
+makeImageVariation.js
+makeImageEdit.js
+node_modules
+mask.png
+square.png
 
 
