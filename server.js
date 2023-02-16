@@ -11,6 +11,7 @@ const { createImage } = require('./server/createImage');
 
 const app = express();
 app.use(express.json());
+app.use(express.static(path.join(__dirname)));
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
@@ -21,7 +22,7 @@ app.get('/', async (req, res, next) => {
     // respond by sending index.html file
     res.status(200).sendFile(root);
   } catch (error) {
-    console.log('***** Error! Something undesired happened: *****\n', error);
+    console.log('***** Error! Undesired event in / endpoint: *****\n', error);
     res.status(400).json(error);
   }
 });

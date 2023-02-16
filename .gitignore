@@ -2,3 +2,10 @@ index.html
 /node_modules
 .env
 index.js
+style.css
+palette1.svg
+palette2.svg
+palette3.svg
+brush*
+dog*
+/images
