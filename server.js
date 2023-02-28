@@ -6,16 +6,18 @@ const path = require('path');
 const PORT = process.env.PORT || 8001;
 require('dotenv').config();
 
-// load custom module
-const { createImage } = require('./server/createImage');
+const routes = require('./server/routes');
 
 const app = express();
 app.use(express.json());
+//app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname)));
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-app.get('/', async (req, res, next) => {
+
+app.use(routes);
+app.get('/', async (req, res) => {
   try {
     // get absolute path of index.html
     const root = path.join(__dirname, 'index.html');
@@ -26,7 +28,6 @@ app.get('/', async (req, res, next) => {
     res.status(400).json(error);
   }
 });
-
 app.get('/transcription', async (req, res) => {
     try {
       const response = await axios.post(
@@ -49,18 +50,6 @@ app.get('/transcription', async (req, res) => {
     }
 });
 
-app.post('/createImage', async (req, res) => {
-  try {
-    // console.log(req.body);
-    const { prompt, n, size } = req.body;
-    // call custom function createImage()
-    const returnedData = await createImage(prompt, n, size);
-    res.json({ returnedData })
-  } catch (error) {
-    console.log('***** Error! Undesired event in /createImage endpoint: *****\n', error);
-    res.status(400).json(error);
-  }
-});
 
 // start the web server, listening for connections on the port assigned above
 const server = app.listen(PORT, () => {

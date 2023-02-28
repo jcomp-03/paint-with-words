@@ -77,11 +77,53 @@ body {
   border: solid 2px red;
 }
 
-.main__button:hover {
+/* .main__button:hover {
   animation-name: wiggle;
   animation-duration: 10s;
   animation-iteration-count: infinite;
+} */
+
+.modal__body {
+  border: solid 2px red;
+  margin: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+.modal__body__p {
+  text-align: center;
+}
+
+.modal__body__button {
+  margin: 1rem 0;
+  background-color: red;
+  padding: 1.5rem;
+  border-radius: 50%;
+  border: solid 4px black;
+}
+
+.modal__body__form {
+  width: 90%;
+  border: solid 2px black;
+}
+
+.form__group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__textarea {
+  margin: 1rem;
+  border: solid 2px white;
+}
+
+.form__select {
+  margin: 1rem;
+  border: solid 2px white;
+}
+
+
 
 @keyframes wiggle {
   0% {
