@@ -95,35 +95,48 @@ body {
   text-align: center;
 }
 
-.modal__body__button {
-  margin: 1rem 0;
-  background-color: red;
-  padding: 1.5rem;
-  border-radius: 50%;
-  border: solid 4px black;
-}
-
 .modal__body__form {
-  width: 90%;
+  width: 100%;
   border: solid 2px black;
 }
 
 .form__group {
   display: flex;
   flex-direction: column;
+  margin: 1rem;
+  border: solid 2px white;
+  padding: 0.25rem;
+}
+
+.form__group label {
+  margin-bottom: 0.5rem;
+}
+
+.form__button {
+  display: block;
+  margin: 2rem auto;
+  background-color: red;
+  padding: 1.5rem;
+  border-radius: 50%;
+  border: solid 4px black;
 }
 
 .form__textarea {
-  margin: 1rem;
-  border: solid 2px white;
+  resize: none;
 }
 
-.form__select {
-  margin: 1rem;
-  border: solid 2px white;
+.form__radio {
+  display: flex;
 }
 
+.form__radio:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
 
+.form__radio label {
+  margin-left: 0.5rem;
+  margin-bottom: 0;
+}
 
 @keyframes wiggle {
   0% {
