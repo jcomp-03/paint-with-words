@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import useWebSocket, { ReadyState } from "react-use-websocket";
-// import RecordRTC, { RecordRTCPromisesHandler } from "recordrtc";
-import { startRecordingWithPermission } from "../utils/js/index";
+import useWebSocket from "react-use-websocket";
+import { getPermissionToRecordAudio } from "../utils/js/index";
 
 const FormComponent = () => {
   // state for submit button
@@ -34,20 +33,28 @@ const FormComponent = () => {
   // websocket-related state, functions
   let [isRecording, setIsRecording] = useState(false);
   let [socketUrl, setSocketUrl] = useState(null);
-  let texts = {};
-  // let recorder;
+  let [texts, setTexts] = useState({});
   // const [messageHistory, setMessageHistory] = useState({});
   // function printErrorMessage(error) {
   //   console.log('Your error message turned out to be', error);
   // }
-  const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl, {
+  const { sendJsonMessage } = useWebSocket(socketUrl, {
     onMessage: (message) => {
+      console.log(`***** Websocket MESSAGE *****`);
+      // console.log('message.data object is', message.data);
+      console.log('text before setting', texts);
       let msg = "";
       const res = JSON.parse(message.data);
+      // console.log(res);
       // JSON response from WebSocket API features keys like audio_start and text
       // In line of code below, assign a new property to object 'texts' with its name as
       // the current audio_start time and text as its value
-      texts[res.audio_start] = res.text;
+      if(res.text) {
+        setTexts({...texts, [res.audio_start]: res.text});
+      }
+
+      console.log('text after setting', texts);
+
       // traverse the properties of the object 'texts', saving their names in an array 'keys'
       const keys = Object.keys(texts);
       keys.sort((a, b) => a - b);
@@ -56,6 +63,7 @@ const FormComponent = () => {
           msg += ` ${texts[key]}`;
         }
       }
+
       // update the state
       setImageParameters({
         ...imageParameters,
@@ -69,32 +77,34 @@ const FormComponent = () => {
     },
     onClose: (event) => {
       console.log(`***** Websocket CLOSED *****`);
-      // console.log(event);
-      // setSocketUrl(null);
+      console.log(event);
+      setSocketUrl(null);
     },
-    onOpen: (event) => {
+    onOpen: () => {
       console.log(`***** Websocket OPENED *****`);
-      // call custom hook below to request permission and instantiate recorder
-      startRecordingWithPermission("audio", socketUrl)
+      // request permission and instantiate recorder
+      getPermissionToRecordAudio(socketUrl, sendJsonMessage)
         .then((recorder) => {
           // what now?
-          console.log("recorder is", recorder);
+          recorder.startRecording();
+          console.log("***** Recording initiated. Recorder object below. *****", recorder);
         })
         .catch(handleDOMException);
     },
+    retryOnError: true,
     // Will NOT attempt to reconnect on all close events, such as server shutting down
     shouldReconnect: (closeEvent) => false,
   });
 
-  const connectionStatus = {
-    [ReadyState.CONNECTING]: "Connecting",
-    [ReadyState.OPEN]: "Open",
-    [ReadyState.CLOSING]: "Closing",
-    [ReadyState.CLOSED]: "Closed",
-    [ReadyState.UNINSTANTIATED]: "Uninstantiated",
-  }[readyState];
+  // const connectionStatus = {
+  //   [ReadyState.CONNECTING]: "Connecting",
+  //   [ReadyState.OPEN]: "Open",
+  //   [ReadyState.CLOSING]: "Closing",
+  //   [ReadyState.CLOSED]: "Closed",
+  //   [ReadyState.UNINSTANTIATED]: "Uninstantiated",
+  // }[readyState];
 
-  // handler for DOMExceptions
+  // handler for DOM Exceptions
   const handleDOMException = (error) => {
     console.log("***** DOM Exception event: *****\n", error);
     // update state for socket and recording
@@ -105,16 +115,10 @@ const FormComponent = () => {
   // handler for record button
   const handleRecordClick = async () => {
     if (isRecording) {
-      setSocketUrl(null);
-      //   if (socket) {
-      //     socket.send(JSON.stringify({ terminate_session: true }));
-      //     socket.close();
-      //     socket = null;
-      //   }
-      //   if (recorder) {
-      //     recorder.pauseRecording();
-      //     recorder = null;
-      //   }
+        if (socketUrl) {
+          sendJsonMessage({terminate_session: true});
+          setSocketUrl(null);
+        }
     } else {
       // get temp session token from backend
       const response = await fetch("/api/transcribe");
@@ -130,14 +134,12 @@ const FormComponent = () => {
       setSocketUrl(
         `wss://api.assemblyai.com/v2/realtime/ws?sample_rate=16000&token=${token}`
       );
-      // handle incoming messages to display transcription to the DOM
     }
-
     // negate current state of isRecording
     setIsRecording(!isRecording);
   };
 
-  // event handler for updating image parameters, i.e. prompt, n, & size
+  // handler for updating image parameters, i.e. prompt, n, & size
   const handleUpdateImageParameter = (e) => {
     // destructure name and value from target
     let { name, value } = e.target;
@@ -189,7 +191,7 @@ const FormComponent = () => {
     <>
       <Form className="modal__body__form" onSubmit={handleFormSubmit}>
         <Button
-          className="form__button"
+          className="form__button--record"
           id="record-btn"
           onClick={handleRecordClick}
         >
@@ -247,7 +249,7 @@ const FormComponent = () => {
           ))}
         </Form.Group>
 
-        <Button variant="primary" type="submit" disabled={isDisabled}>
+        <Button className="form__button--submit" type="submit" disabled={isDisabled}>
           Submit
         </Button>
       </Form>

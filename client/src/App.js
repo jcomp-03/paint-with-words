@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-// import Header from "./components/Header";
-// import Jumbotron from "./components/Jumbotron";
+import Header from "./components/Header";
+import Jumbotron from "./components/Jumbotron";
 import PaletteButton from "./components/PaletteButton";
 import ModalComponent from "./components/Modal";
 
 function App() {
   // state variables
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   // event handlers
   const handleCloseModal = () => setShowModal(false);
@@ -14,13 +14,12 @@ function App() {
 
   return (
     <div className="main">
-      {/* <Header />
-      <Jumbotron /> */}
+      <Header />
+      <Jumbotron />
       <PaletteButton handleOpenModal={handleOpenModal} />
       <ModalComponent
         showModal={showModal}
         handleCloseModal={handleCloseModal}
-        handleOpenModal={handleOpenModal}
       />
     </div>
   );

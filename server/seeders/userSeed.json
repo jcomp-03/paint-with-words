@@ -1,0 +1,56 @@
+[
+    { 
+        "firstName": "Molly",
+        "lastName": "Shannon",
+        "username" : "Molly48", 
+        "email" : "Molly48_Waters59@hotmail.com", 
+        "password" : "kGjRfUNWUIRwfS_", 
+        "friends" : [], 
+        "images" : [] 
+    },
+    { 
+        "firstName": "Katlyn",
+        "lastName": "Wiggins",
+        "username" : "Katlyn85", 
+        "email" : "Katlyn8550@gmail.com", 
+        "password" : "otK5YtXpcalD1cm", 
+        "friends" : [], 
+        "images" : [] 
+    },
+    { 
+        "firstName": "Lessie",
+        "lastName": "Kautzer",
+        "username" : "Lessie_Kautzer61", 
+        "email" : "Lessie_Kautzer61_Walker81@hotmail.com", 
+        "password" : "AP3EUTRZoxzsiHn", 
+        "friends" : [], 
+        "images" : [] 
+    },
+    { 
+        "firstName": "Elton",
+        "lastName": "Heaney",
+        "username" : "Elton_Heaney", 
+        "email" : "Elton_Heaney.Kemmer6@yahoo.com", 
+        "password" : "3dVgRgSQmrGLaQE", 
+        "friends" : [], 
+        "images" : [] 
+    },
+    { 
+        "firstName": "Josue",
+        "lastName": "Rodriguez",
+        "username" : "Josue67", 
+        "email" : "Josue6785@yahoo.com", 
+        "password" : "BNsmR75BHDH4na3", 
+        "friends" : [], 
+        "images" : [] 
+    },
+    { 
+        "firstName": "Jared",
+        "lastName": "Leto",
+        "username" : "Jaron98", 
+        "email" : "Jaron98_Will72@hotmail.com", 
+        "password" : "vNVT_y10PBpVaUV", 
+        "friends" : [], 
+        "images" : [] 
+    }
+]
