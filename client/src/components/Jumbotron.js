@@ -6,7 +6,7 @@ const Jumbotron = () => {
   
     return (
     <svg
-      viewBox="0 0 500 250"
+      viewBox="0 0 500 150"
       className="svg"
       xmlns="http://www.w3.org/2000/svg"
     >

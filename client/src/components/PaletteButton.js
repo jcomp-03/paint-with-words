@@ -4,8 +4,8 @@ const PaletteButton = ({ handleOpenModal }) => {
   return (
     <button
       onClick={handleOpenModal}
-      className="main__button"
-      id="main-button"
+      className="palette__button"
+      id="palette-button"
     ></button>
   );
 };

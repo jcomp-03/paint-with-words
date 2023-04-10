@@ -1,27 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
-import Jumbotron from "./components/Jumbotron";
-import PaletteButton from "./components/PaletteButton";
-import ModalComponent from "./components/Modal";
+import Footer from "./components/Footer";
+
+import HomePage from "./pages/Home";
+import PaintPage from "./pages/Paint";
+import LoginPage from "./pages/Login";
+import ErrorPage from "./pages/Error";
 
 function App() {
-  // state variables
-  const [showModal, setShowModal] = useState(false);
-
-  // event handlers
-  const handleCloseModal = () => setShowModal(false);
-  const handleOpenModal = () => setShowModal(true);
-
   return (
-    <div className="main">
-      <Header />
-      <Jumbotron />
-      <PaletteButton handleOpenModal={handleOpenModal} />
-      <ModalComponent
-        showModal={showModal}
-        handleCloseModal={handleCloseModal}
-      />
-    </div>
+    <Router>
+      <div className="main">
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/paint" element={<PaintPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

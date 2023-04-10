@@ -1,6 +1,8 @@
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 /src/utils/API.js
+index_v0.css
+
 
 # dependencies
 /node_modules
