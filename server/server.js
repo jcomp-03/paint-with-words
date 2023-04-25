@@ -5,7 +5,8 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
 const path = require('path');
-
+// import authentication middleware
+const { authMiddleware } = require('./utils/authorization')
 const PORT = process.env.PORT || 8001;
 
 // import schema type definitions and resolvers
@@ -16,6 +17,9 @@ const { ApolloServer } = require('apollo-server-express');
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  // every request performed will have an authentication check done
+  // the updated request object will be passed to the resolvers as the context
+  context: authMiddleware
 });
 
 const routes = require('./routes');
@@ -24,16 +28,12 @@ const app = express();
 app.use(express.json());
 //app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname)));
+console.log(path.join(__dirname));
 // app.use(express.static(path.join(__dirname, 'public')));
+// enable CORS for all origins  
 app.use(cors());
 
-
 app.use(routes);
-
-// start the web server, listening for connections on the port assigned above
-// const server = app.listen(PORT, () => {
-//   console.log(`***** Server is running on port ${PORT} *****`);
-// });
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async (typeDefs, resolvers) => {

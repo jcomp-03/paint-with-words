@@ -1,22 +1,6 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-  # Your schema will go here
-  type Query {
-    "Query to get current information about the currently logged-in user"
-    me: User
-    "Query to get all users"
-    users: [User!]
-    "Query to get a user by its username"
-    user(username: String): User
-    "Query to get all images, from all the users"
-    images: [Image!]
-    "Query to get all images by a single user"
-    imagesByUsername(username: String!): [Image!]
-    "Query to get a single image by its id"
-    imageByImageId(_id: ID!): Image
-  }
-
   "A user type holds information about a person who has created an account"
   type User {
     _id: ID!
@@ -60,11 +44,41 @@ const typeDefs = gql`
     username: String
   }
 
-  # enum ImageSize {
-  #   SMALL: "256x256"
-  #   MEDIUM: "512x512"
-  #   LARGE: "1024x1024"
-  # }
+  "An authorization type holds token information associated with a user"
+  type Authorization {
+    "The token ID; by necessity this field must be returned by the Authorizaton type"
+    token: ID!
+    "User information can be returned optionally"
+    user: User
+  }
+
+  type Query {
+    "Query to get current information about the currently logged-in user"
+    me: User
+    "Query to get all users"
+    users: [User!]
+    "Query to get a user by its username"
+    user(username: String): User
+    "Query to get all images, from all the users"
+    images: [Image!]
+    "Query to get all images by a single user"
+    imagesByUsername(username: String!): [Image!]
+    "Query to get a single image by its id"
+    imageByImageId(_id: ID!): Image
+  }
+
+  type Mutation {
+    "Mutation for logging in an existing user"
+    login(username: String!, password: String!): Authorization
+    "Mutation for adding a new user to the user data table"
+    addUser(
+      firstName: String!
+      lastName: String!
+      username: String!
+      email: String!
+      password: String!
+    ): Authorization
+  }
 `;
 
 module.exports = typeDefs;

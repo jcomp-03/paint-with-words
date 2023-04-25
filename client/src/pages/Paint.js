@@ -1,9 +1,9 @@
 import React from "react";
-import ModalComponent from "../components/Modal";
+import NewPaintingModal from "../components/NewPaintingModal";
 
 const PaintPage = () => {
   return (
-    <ModalComponent />
+    <NewPaintingModal />
   );
 };
 

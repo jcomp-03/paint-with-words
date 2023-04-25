@@ -32,12 +32,12 @@ body[class="modal-open"] {
 }
 
 .header {
-  border-bottom: solid 0.25rem var(--colorMain2);
+  border-bottom: solid 0.1rem var(--colorMain2);
   color: var(--themeColor1);
   width: 100%;
   position: fixed;
   top: 0;
-  height: 5vh;
+  height: 10vh;
   display: flex;
   justify-content: space-between;
   margin-top: 0.5rem;
@@ -45,30 +45,34 @@ body[class="modal-open"] {
 
 .header__div {
   padding-left: 1rem;
-  width: 40vw;
+  width: 41vw;
   height: inherit;
-  display: flex;
-  font-size: var(--stdFontSize);
+  display: inherit;
+  font-size: calc(2* var(--stdFontSize));
+  font-weight: 800;
   align-items: center;
   font-family: "Covered By Your Grace", cursive;
 }
 
 .header__div__image {
-  max-height: 100%;
+  max-width:50%;
+  height: auto;
+  max-height: 8vh;
   margin-left: 0.5rem;
+  text-align: start;
 }
 
 .header__nav {
   display: inherit;
-  min-width: fit-content;
+  align-items: center;
   justify-content: space-around;
-  padding: 0.2rem 0;
 }
 
 .nav__icon {
-  font-size: calc(var(--stdFontSize) * 2);
+  font-size: calc(1.5 * var(--stdFontSize));
   margin: 0 0.5rem;
 }
+
 .nav__icon--globe {
 }
 
@@ -78,7 +82,7 @@ body[class="modal-open"] {
 .nav__icon--profile {
 }
 
-.main {
+.container {
   display: flex;
   flex-wrap: wrap;
   /* justify-content: space-between; */
@@ -86,11 +90,17 @@ body[class="modal-open"] {
   flex-direction: column;
 }
 
+.main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+}
+
 .svg {
-  border: var(--border3);
+
   font-family: "Covered By Your Grace", cursive;
   font-weight: bolder;
-  height: 50vh;
+  height: 25vh;
   width: 100%;
   margin: 10vh 0 0;
 }
@@ -102,7 +112,7 @@ body[class="modal-open"] {
 }
 
 .svg__path {
-  stroke-width: 0.15rem;
+  stroke-width: 0.1rem;
   stroke: white;
 }
 
@@ -121,7 +131,8 @@ body[class="modal-open"] {
   border: none;
   border: solid 2px red;
   height: 7rem;
-  min-width: 40%;
+  width: 30%;
+  margin: 0 auto;
   position: relative;
   top: -6rem;
 }
@@ -156,7 +167,7 @@ body[class="modal-open"] {
   max-height: 2.5rem;
 }
 
-img .modal__container {
+.modal__container {
   background-color: var(--themeColor1);
   padding-left: 0px !important;
   width: 80%;
@@ -187,7 +198,6 @@ img .modal__container {
 
 .modal__body {
   align-items: center;
-  border: var(--border1);
   display: flex;
   flex-direction: column;
   margin: 1rem 2rem;
@@ -207,7 +217,7 @@ img .modal__container {
 }
 
 .modal__body__form {
-  border: var(--border2);
+  /* border: var(--border2); */
   width: 100%;
 }
 
@@ -268,6 +278,12 @@ img .modal__container {
   justify-content: flex-start;
 }
 
+.login__title {
+  color: var(--colorMain2);
+}
+.loginForm {
+
+}
 @keyframes wiggle {
   0% {
     transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
@@ -285,16 +301,9 @@ img .modal__container {
 
 /* Media queries for responsive design */
 @media screen and (min-width: 576px) {
-  .header__div {
-    font-size: calc(var(--stdFontSize) * 2);
-    font-weight: 800;
+  .nav__icon {
+    font-size: calc(1.75 * var(--stdFontSize));
   }
-
-  .palette__button {
-    top: -7rem;
-    min-width: 30%;
-  }
-
 }
 
 @media screen and (min-width: 768px) {
@@ -302,6 +311,9 @@ img .modal__container {
     /* height: 5vh; */
   }
 
+  .header__div {
+    width: 34vw;
+  }
   .nav__icon {
     margin: 0 0.8rem;
   }
@@ -320,6 +332,12 @@ img .modal__container {
     padding: 2.5rem;
     /* font-size: 1rem; */
   }
+
+  .footer {
+    font-size: calc(1.25 * var(--stdFontSize) );
+    flex-direction: row;
+    align-items: center;
+  }
 }
 
 @media screen and (min-width: 992px) {
@@ -329,9 +347,7 @@ img .modal__container {
   }
 
   .footer {
-    font-size: calc(var(--stdFontSize) * 1.75);
-    flex-direction: row;
-    align-items: center;
+    font-size: calc(1.75 * var(--stdFontSize) );
   }
 
   .footer__img {
@@ -366,5 +382,11 @@ img .modal__container {
     font-weight: bolder; */
     margin: 0 auto;
     padding: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .svg {
+    margin: 15vh 0 0;
   }
 }

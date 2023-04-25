@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import useWebSocket from "react-use-websocket";
-import { getPermissionToRecordAudio } from "../utils/js/index";
+import { getPermissionToRecordAudio } from "../utils/index";
 
-const FormComponent = () => {
+const GeneratePaintingForm = () => {
   // state for submit button
   const [isDisabled, setIsDisabled] = useState(true);
   // state for image parameters
@@ -257,4 +257,4 @@ const FormComponent = () => {
   );
 };
 
-export default FormComponent;
+export default GeneratePaintingForm;

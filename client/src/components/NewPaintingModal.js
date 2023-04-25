@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import FormComponent from "./Form";
+import GeneratePaintingForm from "./FormGeneratePainting";
 
-function ModalComponent() {
+function NewPaintingModal() {
   const [showModal, setShowModal] = useState(true);
   const handleOnCloseModal = () => setShowModal(false);
   const handleOnHideModal = () => setShowModal(false);
@@ -38,12 +38,12 @@ function ModalComponent() {
             Aftewards, select a few options below like the image size and the
             number of distinct images you wish to render.
           </p>
-          <FormComponent />
+          <GeneratePaintingForm />
         </Modal.Body>
       </Modal>
     </>
   );
 }
 
-export default ModalComponent;
+export default NewPaintingModal;
 
