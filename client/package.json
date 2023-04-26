@@ -2,7 +2,6 @@
   "name": "paint-with-words",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8001",
   "dependencies": {
     "@apollo/client": "^3.7.1",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",

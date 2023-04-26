@@ -31,6 +31,16 @@ body[class="modal-open"] {
   padding-right: 0px !important;
 }
 
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: space-between; */
+  align-items: center;
+  flex-direction: column;
+}
+
+/*****************/
+/*****HEADER*****/
 .header {
   border-bottom: solid 0.1rem var(--colorMain2);
   color: var(--themeColor1);
@@ -40,7 +50,7 @@ body[class="modal-open"] {
   height: 10vh;
   display: flex;
   justify-content: space-between;
-  margin-top: 0.5rem;
+  /* margin-top: 0.5rem; */
 }
 
 .header__div {
@@ -48,14 +58,14 @@ body[class="modal-open"] {
   width: 41vw;
   height: inherit;
   display: inherit;
-  font-size: calc(2* var(--stdFontSize));
+  font-size: calc(2 * var(--stdFontSize));
   font-weight: 800;
   align-items: center;
   font-family: "Covered By Your Grace", cursive;
 }
 
 .header__div__image {
-  max-width:50%;
+  max-width: 50%;
   height: auto;
   max-height: 8vh;
   margin-left: 0.5rem;
@@ -72,37 +82,173 @@ body[class="modal-open"] {
   font-size: calc(1.5 * var(--stdFontSize));
   margin: 0 0.5rem;
 }
+/********************/
+/*****END HEADER*****/
 
-.nav__icon--globe {
-}
-
-.nav__icon--login {
-}
-
-.nav__icon--profile {
-}
-
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  /* justify-content: space-between; */
-  align-items: center;
-  flex-direction: column;
-}
-
+/*****************/
+/*****MAIN*******/
 .main {
   display: flex;
   flex-direction: column;
-  flex-grow: 2;
+  /* justify-content: start; */
+  /* flex-grow: 2; */
+  width: 100%;
+  margin-top: 10vh;
+  height: 80vh;
+  border: solid 3px yellow;
+}
+/*********************/
+/*****END MAIN*******/
+
+.page__login {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.svg {
+.login__title {
+  color: var(--themeColor2);
+}
 
+.login__content {
+  display: flex;
+  flex-direction: column;
+  border: solid 2px red;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.random {
+  display: none;
+  width: 30vw;
+  height: 30vw;
+  background-color: white;
+  margin-left: 5vw;
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 2rem;
+  width: 100%;
+  /* margin-right: 5vw; */
+  /* background-color: var(--themeColor2); */
+}
+
+.login__form > :not(:first-child) {
+  margin-top: 2rem;
+}
+
+.login__form__group {
+  display: flex;
+  flex-direction: column;
+  padding: 0.25rem;
+  /* border: solid 2px green; */
+}
+.login__form__group label {
+  color: var(--themeColor1);
+  font-size: 1.25rem;
+  font-weight: bold;
+  font-family: "Permanent Marker", cursive;
+  margin-bottom: 0.25rem;
+}
+.login__form__group input {
+  padding: 0 0.5rem;
+  height: 2rem;
+}
+.login__form__group small {
+  padding-top: 0.25rem;
+  color: var(--themeColor1);
+  font-family: "Permanent Marker", cursive;
+}
+
+.login__form__button {
+  background-color: green;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+}
+
+.login__form__button a {
+  font-family: "Permanent Marker", cursive;
+  color: white;
+  text-decoration: none;
+  position: relative;
+  left: 0;
+  transition: all 0.35s ease-Out;
+}
+
+.login__form__button--arrows {
+  width: 100%;
+  height: 100%;
+  background: var(--themeColor2);
+  left: -550px;
+  position: absolute;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.35s ease-Out;
+  bottom: 0;
+}
+
+.login__form__button img {
+  width: 40px;
+  height: auto;
+}
+
+.login__form__button:hover .login__form__button--arrows {
+  left: 0;
+  color: white;
+}
+
+.login__form__button:hover a {
+  left: 550px;
+}
+
+@media screen and (min-width: 576px) {
+  .login__form {
+    width: 75%;
+  }
+}
+@media screen and (min-width: 768px) {
+  .login__title {
+    font-size: 3rem;
+  }
+
+  .login__content {
+    flex-direction: row;
+    /* height: 50vh; */
+    justify-content: space-between;
+  }
+
+  .random {
+    display: block;
+  }
+
+  .login__form {
+    width: 50%;
+    margin-right: 5vw;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .login__form {
+    width: 30%;
+  }
+}
+/**********************/
+/*****HOME PAGE*******/
+.svg {
   font-family: "Covered By Your Grace", cursive;
   font-weight: bolder;
   height: 25vh;
   width: 100%;
-  margin: 10vh 0 0;
+  margin-top: 5vh;
 }
 
 .svg__pattern--image {
@@ -142,7 +288,11 @@ body[class="modal-open"] {
   animation-duration: 10s;
   animation-iteration-count: infinite;
 } */
+/**************************/
+/*****END HOME PAGE*******/
 
+/*****************/
+/*****FOOTER*****/
 .footer {
   text-align: center;
   background-color: var(--colorMain2);
@@ -151,7 +301,6 @@ body[class="modal-open"] {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: fit-content;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -166,7 +315,11 @@ body[class="modal-open"] {
 .footer__img.img__react {
   max-height: 2.5rem;
 }
+/********************/
+/*****END FOOTER*****/
 
+/***********************/
+/*****PAINT PAGE*******/
 .modal__container {
   background-color: var(--themeColor1);
   padding-left: 0px !important;
@@ -217,7 +370,6 @@ body[class="modal-open"] {
 }
 
 .modal__body__form {
-  /* border: var(--border2); */
   width: 100%;
 }
 
@@ -260,7 +412,6 @@ body[class="modal-open"] {
 }
 
 .form__group {
-  /* border: solid 2px white; */
   display: flex;
   flex-direction: column;
   margin: 1rem;
@@ -270,20 +421,9 @@ body[class="modal-open"] {
 .form__group label {
   margin-bottom: 0.5rem;
 }
+/***************************/
+/*****END PAINT PAGE*******/
 
-.modal__footer {
-  border: var(--border1);
-  /* margin: 1rem; */
-  display: flex;
-  justify-content: flex-start;
-}
-
-.login__title {
-  color: var(--colorMain2);
-}
-.loginForm {
-
-}
 @keyframes wiggle {
   0% {
     transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
@@ -308,7 +448,6 @@ body[class="modal-open"] {
 
 @media screen and (min-width: 768px) {
   .header {
-    /* height: 5vh; */
   }
 
   .header__div {
@@ -334,7 +473,7 @@ body[class="modal-open"] {
   }
 
   .footer {
-    font-size: calc(1.25 * var(--stdFontSize) );
+    font-size: calc(1.25 * var(--stdFontSize));
     flex-direction: row;
     align-items: center;
   }
@@ -347,14 +486,14 @@ body[class="modal-open"] {
   }
 
   .footer {
-    font-size: calc(1.75 * var(--stdFontSize) );
+    font-size: calc(1.75 * var(--stdFontSize));
   }
 
   .footer__img {
     max-width: 7rem;
     margin-left: 0.75rem;
   }
-  
+
   .footer__img.img__react {
     max-height: 3.25rem;
   }
@@ -386,7 +525,4 @@ body[class="modal-open"] {
 }
 
 @media screen and (min-width: 1200px) {
-  .svg {
-    margin: 15vh 0 0;
-  }
 }

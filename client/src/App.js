@@ -17,7 +17,7 @@ import LoginPage from "./pages/Login";
 import ErrorPage from "./pages/Error";
 
 const httpLink = createHttpLink({
-  uri: "/graphql",
+  uri: 'http://localhost:8001/graphql',
 });
 
 // server can use the header to authenticate the user and
