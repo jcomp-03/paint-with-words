@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import useWebSocket from "react-use-websocket";
 import { getPermissionToRecordAudio } from "../utils/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlay,
+  faMicrophone,
+  faPause,
+} from "@fortawesome/free-solid-svg-icons";
+import { GET_ASSEMBLYAI_TOKEN } from "../utils/mutations";
+import { useMutation } from "@apollo/client";
 
 const GeneratePaintingForm = () => {
   // state for submit button
@@ -15,6 +21,12 @@ const GeneratePaintingForm = () => {
     n: 1,
     size: "",
   });
+  // state for websocket-related stuff
+  let [isRecording, setIsRecording] = useState(false);
+  let [socketUrl, setSocketUrl] = useState(null);
+  let [texts, setTexts] = useState({});
+  // ref for submit button to conditionally render animation
+  const submitBtn = useRef(null);
   // array which provides values for radio buttons
   const radioInputArray = [
     { "input-type": "radio", value: "1024x1024" },
@@ -22,11 +34,25 @@ const GeneratePaintingForm = () => {
     { "input-type": "radio", value: "256x256" },
   ];
   const playIcon = <FontAwesomeIcon icon={faPlay} className="nav__icon" />;
+  const microphoneIcon = (
+    <FontAwesomeIcon icon={faMicrophone} className="nav__icon" />
+  );
   const pauseIcon = <FontAwesomeIcon icon={faPause} className="nav__icon" />;
+
+  const [getAAITemporaryToken, { data, loading, error }] =
+    useMutation(GET_ASSEMBLYAI_TOKEN);
+
+  // useEffect hook runs when the recording state changes
+  useEffect(() => {
+    console.log("isRecording useEffect ran");
+    isRecording
+      ? submitBtn.current.classList.add("animation-pulse")
+      : submitBtn.current.classList.remove("animation-pulse");
+  }, [isRecording]);
+
   // useEffect hook runs when image parameters state changes
   // also determines if submit button is enabled or disabled
   useEffect(() => {
-    // console.log("imageParameters state:", imageParameters);
     const canBeSubmitted = () => {
       let { prompt, n, size } = imageParameters;
       return prompt && n && size ? true : false;
@@ -34,10 +60,6 @@ const GeneratePaintingForm = () => {
     setIsDisabled(!canBeSubmitted());
   }, [imageParameters]);
 
-  // websocket-related state, functions
-  let [isRecording, setIsRecording] = useState(false);
-  let [socketUrl, setSocketUrl] = useState(null);
-  let [texts, setTexts] = useState({});
   // const [messageHistory, setMessageHistory] = useState({});
   // function printErrorMessage(error) {
   //   console.log('Your error message turned out to be', error);
@@ -95,6 +117,8 @@ const GeneratePaintingForm = () => {
             "***** Recording initiated. Recorder object below. *****",
             recorder
           );
+          // negate current state of isRecording
+          setIsRecording(!isRecording);
         })
         .catch(handleDOMException);
     },
@@ -125,25 +149,21 @@ const GeneratePaintingForm = () => {
       if (socketUrl) {
         sendJsonMessage({ terminate_session: true });
         setSocketUrl(null);
+        // negate current state of isRecording
+        setIsRecording(!isRecording);
       }
     } else {
-      // get temp session token from backend
-      const response = await fetch("/api/transcribe");
-      const data = await response.json();
-      // if there's an error, return out of function
-      if (data.error) {
-        alert("Your transcription request can't be completed:", data.error);
-        return null;
-      }
-      // destructure token from the data
-      const { token } = data;
-      // establish wss with AssemblyAI (AAI) at 16000 sample rate
+      const { data } = await getAAITemporaryToken();
+      //console.log(data.getAAITemporaryToken);
+      const { token } = data.getAAITemporaryToken.data;
+      // establish wss with AssemblyAI (AAI) at 16000 sample rate; by setting a url,
+      // this causes websocket-related events to fire
       setSocketUrl(
         `wss://api.assemblyai.com/v2/realtime/ws?sample_rate=16000&token=${token}`
       );
     }
-    // negate current state of isRecording
-    setIsRecording(!isRecording);
+    // // negate current state of isRecording
+    // setIsRecording(!isRecording);
   };
 
   // handler for updating image parameters, i.e. prompt, n, & size
@@ -161,6 +181,15 @@ const GeneratePaintingForm = () => {
     });
   };
 
+  const handleFormReset = () => {
+    console.log("handleFormReset ran");
+    // reset image parameters to default state;
+    setImageParameters({
+      prompt: "",
+      n: 1,
+      size: "",
+    });
+  };
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -198,12 +227,14 @@ const GeneratePaintingForm = () => {
     <>
       <Form className="modal__body__form" onSubmit={handleFormSubmit}>
         <Button
+          ref={submitBtn}
           className="form__button--record"
           id="record-btn"
           onClick={handleRecordClick}
         >
-          {isRecording ? pauseIcon : playIcon}
+          {isRecording ? pauseIcon : microphoneIcon}
         </Button>
+        <p>Hello</p>
 
         <Form.Group className="form__group" controlId="formTextarea">
           <Form.Label>Your recorded speech translated as:</Form.Label>
@@ -220,7 +251,7 @@ const GeneratePaintingForm = () => {
         <Form.Group className="form__group" controlId="formSelect">
           <Form.Label>How many images do you wish to generate?</Form.Label>
           <Form.Select
-            defaultValue={1}
+            value={imageParameters.n}
             aria-label="Default select example"
             size="lg"
             onChange={handleUpdateImageParameter}
@@ -263,6 +294,9 @@ const GeneratePaintingForm = () => {
           disabled={isDisabled}
         >
           Submit
+        </Button>
+        <Button className="form__button--reset" onClick={handleFormReset}>
+          Reset Form
         </Button>
       </Form>
     </>

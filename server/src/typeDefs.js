@@ -44,6 +44,17 @@ const typeDefs = gql`
     username: String
   }
 
+  "A type constructed for holding the response from posting to https://api.assemblyai.com/v2/realtime/token"
+  type AAITemporaryTokenResponse {
+    msg: String
+    data: AAITemporaryToken
+  }
+
+  "A type constructed for holding the temporary token issued by AssemblyAI"
+  type AAITemporaryToken {
+    token: String
+  }
+
   "An authorization type holds token information associated with a user"
   type Authorization {
     "The token ID; by necessity this field must be returned by the Authorizaton type"
@@ -78,6 +89,7 @@ const typeDefs = gql`
       email: String!
       password: String!
     ): Authorization
+    getAAITemporaryToken: AAITemporaryTokenResponse
   }
 `;
 

@@ -4,14 +4,23 @@ import Button from "react-bootstrap/Button";
 import GeneratePaintingForm from "./FormGeneratePainting";
 
 function NewPaintingModal() {
-  const [showModal, setShowModal] = useState(true);
-  const handleOnCloseModal = () => setShowModal(false);
-  const handleOnHideModal = () => setShowModal(false);
+  const [showModal, setShowModal] = useState(false);
+  
+  const handleOnCloseModal = () => {
+    console.log("onClose event ran");
+    setShowModal(false);
+  };
+  
+  const handleOnHideModal = () => {
+    console.log("onHide event ran");
+    setShowModal(false);
+  };
+
   const showModalOnFirstRender = () => setShowModal(true);
 
   // set showModal state to true after the initial rendering (mounting)
   useEffect(() => {
-    console.log("effect ran");
+    console.log("showModalOnFirstRender useEffect ran");
     showModalOnFirstRender();
   }, []);
 
@@ -20,10 +29,9 @@ function NewPaintingModal() {
       <Modal
         className="modal__container"
         show={showModal}
-        onHide={handleOnHideModal}
         animation={true}
-        // scrollable={true}
-        // backdrop="static"
+        onHide={handleOnHideModal}
+        backdrop="static"
       >
         <Modal.Header className="modal__header">
           <Button onClick={handleOnCloseModal}>
@@ -46,4 +54,3 @@ function NewPaintingModal() {
 }
 
 export default NewPaintingModal;
-

@@ -12,3 +12,13 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const GET_ASSEMBLYAI_TOKEN = gql`
+mutation GetAAITemporaryToken {
+  getAAITemporaryToken {
+    msg
+    data {
+      token
+    }
+  }
+}`
