@@ -12,15 +12,18 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header__div">
-        Paint Now!
-          <img
-            className="header__div__image"
-            src={Palette}
-            alt="Palette logo linking back to the paint page"
-          />
+        <p>Paint Now!</p>
+        <img
+          className="header__div__image"
+          src={Palette}
+          alt="Palette logo linking back to the paint page"
+        />
       </div>
       <nav className="header__nav">
-        <FontAwesomeIcon icon={faGlobe} className="nav__icon nav__icon--globe" />
+        <FontAwesomeIcon
+          icon={faGlobe}
+          className="nav__icon nav__icon--globe"
+        />
         <FontAwesomeIcon icon={faKey} className="nav__icon nav__icon--login" />
         <FontAwesomeIcon
           icon={faAddressCard}

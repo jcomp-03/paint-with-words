@@ -45,12 +45,9 @@ body[class="modal-open"] {
   border-bottom: solid 0.1rem var(--colorMain2);
   color: var(--themeColor1);
   width: 100%;
-  position: fixed;
-  top: 0;
   height: 10vh;
   display: flex;
   justify-content: space-between;
-  /* margin-top: 0.5rem; */
 }
 
 .header__div {
@@ -62,6 +59,19 @@ body[class="modal-open"] {
   font-weight: 800;
   align-items: center;
   font-family: "Covered By Your Grace", cursive;
+}
+
+.header__div > p {
+  background-image: linear-gradient(
+    270deg,
+    var(--themeColor1),
+    var(--themeColor2),
+    yellow
+  );
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .header__div__image {
@@ -93,9 +103,9 @@ body[class="modal-open"] {
   /* justify-content: start; */
   /* flex-grow: 2; */
   width: 100%;
-  margin-top: 10vh;
-  height: 80vh;
-  border: solid 3px yellow;
+  /* margin-top: 10vh; */
+  /* height: 80vh; */
+  /* border: solid 3px yellow; */
 }
 /*********************/
 /*****END MAIN*******/
@@ -321,12 +331,21 @@ body[class="modal-open"] {
 /***********************/
 /*****PAINT PAGE*******/
 .modal__container {
-  background-color: var(--themeColor1);
-  padding-left: 0px !important;
+  /* background-color: var(--themeColor1); */
+  background-image: linear-gradient(
+    45deg,
+    var(--themeColor1),
+    var(--themeColor2),
+    yellow
+  );
+  /* padding-left: 0px !important; */
+  padding-right: 0px !important;
   width: 80%;
-  margin: 10vh auto;
+  margin: 5vh auto;
   max-height: 80vh;
   overflow: hidden;
+  font-weight: bold;
+  border-radius: 25px 5px 25px 25px;
 }
 
 .modal > .modal-dialog,
@@ -376,16 +395,30 @@ body[class="modal-open"] {
 .form__button--record {
   background-color: red;
   border-radius: 50%;
+  height: 100px;
+  width: 100px;
   border: solid 2px black;
   display: block;
   font-size: var(--stdFontSize);
   font-weight: bolder;
-  margin: 2rem auto;
+  margin: 1rem auto;
   padding: 1.5rem;
 }
 
 .form__textarea {
   resize: none;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+
+.form__select {
+  border-radius: 5px;
+  appearance: none;
+  background-image: url("./images/brush-brown.svg");
+  background-repeat: no-repeat;
+  background-position: 96%;
+  height: 3vh;
+  padding-left: 0.5rem;
 }
 
 .form__radio {
@@ -403,22 +436,23 @@ body[class="modal-open"] {
 
 .form__button--submit {
   background-color: green;
-  border-radius: 10%;
+  border-radius: 50px;
   display: block;
+  width: 50%;
   font-size: var(--stdFontSize);
   font-weight: bolder;
-  margin: 2rem auto;
-  padding: 1.5rem;
+  margin: 0rem auto;
+  padding: 1rem;
 }
 
 .form__group {
   display: flex;
   flex-direction: column;
-  margin: 1rem;
+  margin: 1rem 0;
   padding: 0.25rem;
 }
 
-.form__group label {
+.form__group > label {
   margin-bottom: 0.5rem;
 }
 /***************************/
@@ -447,9 +481,6 @@ body[class="modal-open"] {
 }
 
 @media screen and (min-width: 768px) {
-  .header {
-  }
-
   .header__div {
     width: 34vw;
   }
@@ -513,6 +544,9 @@ body[class="modal-open"] {
     padding: 1.5rem;
   }
 
+  .form__select {
+    height: 4vh;
+  }
   .form__button--submit {
     /* background-color: green;
     border-radius: 10%;

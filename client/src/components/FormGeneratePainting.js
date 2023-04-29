@@ -3,6 +3,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import useWebSocket from "react-use-websocket";
 import { getPermissionToRecordAudio } from "../utils/index";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
 
 const GeneratePaintingForm = () => {
   // state for submit button
@@ -19,6 +21,8 @@ const GeneratePaintingForm = () => {
     { "input-type": "radio", value: "512x512" },
     { "input-type": "radio", value: "256x256" },
   ];
+  const playIcon = <FontAwesomeIcon icon={faPlay} className="nav__icon" />;
+  const pauseIcon = <FontAwesomeIcon icon={faPause} className="nav__icon" />;
   // useEffect hook runs when image parameters state changes
   // also determines if submit button is enabled or disabled
   useEffect(() => {
@@ -42,18 +46,18 @@ const GeneratePaintingForm = () => {
     onMessage: (message) => {
       console.log(`***** Websocket MESSAGE *****`);
       // console.log('message.data object is', message.data);
-      console.log('text before setting', texts);
+      console.log("text before setting", texts);
       let msg = "";
       const res = JSON.parse(message.data);
       // console.log(res);
       // JSON response from WebSocket API features keys like audio_start and text
       // In line of code below, assign a new property to object 'texts' with its name as
       // the current audio_start time and text as its value
-      if(res.text) {
-        setTexts({...texts, [res.audio_start]: res.text});
+      if (res.text) {
+        setTexts({ ...texts, [res.audio_start]: res.text });
       }
 
-      console.log('text after setting', texts);
+      console.log("text after setting", texts);
 
       // traverse the properties of the object 'texts', saving their names in an array 'keys'
       const keys = Object.keys(texts);
@@ -87,7 +91,10 @@ const GeneratePaintingForm = () => {
         .then((recorder) => {
           // what now?
           recorder.startRecording();
-          console.log("***** Recording initiated. Recorder object below. *****", recorder);
+          console.log(
+            "***** Recording initiated. Recorder object below. *****",
+            recorder
+          );
         })
         .catch(handleDOMException);
     },
@@ -115,10 +122,10 @@ const GeneratePaintingForm = () => {
   // handler for record button
   const handleRecordClick = async () => {
     if (isRecording) {
-        if (socketUrl) {
-          sendJsonMessage({terminate_session: true});
-          setSocketUrl(null);
-        }
+      if (socketUrl) {
+        sendJsonMessage({ terminate_session: true });
+        setSocketUrl(null);
+      }
     } else {
       // get temp session token from backend
       const response = await fetch("/api/transcribe");
@@ -195,7 +202,7 @@ const GeneratePaintingForm = () => {
           id="record-btn"
           onClick={handleRecordClick}
         >
-          {isRecording ? "Stop Recording" : "Begin Recording"}
+          {isRecording ? pauseIcon : playIcon}
         </Button>
 
         <Form.Group className="form__group" controlId="formTextarea">
@@ -218,6 +225,7 @@ const GeneratePaintingForm = () => {
             size="lg"
             onChange={handleUpdateImageParameter}
             name="n"
+            className="form__select"
           >
             <option value="1">1</option>
             <option value="2">2</option>
@@ -249,7 +257,11 @@ const GeneratePaintingForm = () => {
           ))}
         </Form.Group>
 
-        <Button className="form__button--submit" type="submit" disabled={isDisabled}>
+        <Button
+          className="form__button--submit"
+          type="submit"
+          disabled={isDisabled}
+        >
           Submit
         </Button>
       </Form>
