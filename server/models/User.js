@@ -7,28 +7,31 @@ const userSchema = new Schema(
       type: String,
       required: true,
       trim: true,
+      minlength: [3, "Minimum length is 3"]
     },
     lastName: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
+      minlength: [3, "Minimum length is 3"]
     },
     username: {
       type: String,
       required: true,
       unique: true,
-      trim: true
+      trim: true,
+      minlength: [3, "Minimum length is 3"]
     },
     email: {
       type: String,
       required: true,
       unique: true,
-      match: [/.+@.+\..+/, 'Must match an email address!']
+      match: [/.+@.+\..+/, 'Email must be in a valid syntax.']
     },
     password: {
       type: String,
       required: true,
-      minlength: 5
+      minlength: [8, "Minimum length is 8"]
     },
     // images are not subdocuments of user collection; 
     // referenced documents, like below, are separate top-level documents.
