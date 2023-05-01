@@ -5,6 +5,7 @@ import pngDblArrow from "../images/login-double-arrow.png";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
+import { displayLoginErrorMessage } from "../utils/errors";
 
 const LoginForm = forwardRef(function LoginForm({ handleShowSignupForm }, ref) {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -12,10 +13,14 @@ const LoginForm = forwardRef(function LoginForm({ handleShowSignupForm }, ref) {
     username: "",
     password: "",
   });
-  const [login, { loading, error }] = useMutation(LOGIN_USER);
+  const [hasErrors, setHasErrors] = useState(false);
+  const [errorMsg, setErrorsMsg] = useState("");
+
+  const [login] = useMutation(LOGIN_USER);
   const greenSubmitBtn = useRef(null);
   const arrowsContainer = useRef(null);
   const spanEl = useRef(null);
+
   // useEffect hook runs when login credentials change
   // determines if submit button is enabled or disabled
   useEffect(() => {
@@ -24,13 +29,11 @@ const LoginForm = forwardRef(function LoginForm({ handleShowSignupForm }, ref) {
       return username && password ? true : false;
     };
     setIsDisabled(!canBeSubmitted());
-    
-    if (canBeSubmitted) {
-    }
   }, [loginCredentials]);
 
-  if (loading) return "Submitting...";
-  if (error) return <div style={{ color: "white" }}>ERROR WILL ROBINSON</div>;
+  useEffect(() => {
+    console.log("hasErrors", hasErrors);
+  }, [hasErrors]);
 
   // handle changes to login form input fields
   const handleChange = (event) => {
@@ -46,17 +49,28 @@ const LoginForm = forwardRef(function LoginForm({ handleShowSignupForm }, ref) {
     event.preventDefault();
     try {
       // run login mutation, passing in current values of loginCredentials state
-      // await completion and destructure the data property from returned object
-      const { data } = await login({
+      // await completion and destructure the data and error property from returned object
+      const { data, errors } = await login({
         variables: { ...loginCredentials },
+        onError: () => setHasErrors(true),
       });
-      console.log("data", data);
+      // change errors state to be whatever errors were returned by Apollo Server
+      if (errors) {
+        setErrorsMsg(errors.message);
+        // clear form values
+        setLoginCredentials({
+          email: "",
+          password: "",
+        });
+        return null;
+      }
       // pass in token value to the login class method, which sets key-value pair in local storage
       // and assigns window.location to /
       Auth.login(data.login.token);
     } catch (e) {
       console.error(e);
     }
+
     // clear form values
     setLoginCredentials({
       email: "",
@@ -67,10 +81,8 @@ const LoginForm = forwardRef(function LoginForm({ handleShowSignupForm }, ref) {
   return (
     <>
       <Form ref={ref} className="login__form" onSubmit={handleFormSubmit}>
-        <Form.Group
-          className="form__group"
-          controlId="login__form__username"
-        >
+        {hasErrors && displayLoginErrorMessage(errorMsg)}
+        <Form.Group className="form__group" controlId="login__form__username">
           <Form.Label>Username:</Form.Label>
           <Form.Control
             type="text"
@@ -83,10 +95,7 @@ const LoginForm = forwardRef(function LoginForm({ handleShowSignupForm }, ref) {
             Don't remember your username? Click here.
           </Form.Text>
         </Form.Group>
-        <Form.Group
-          className="form__group"
-          controlId="login__form__password"
-        >
+        <Form.Group className="form__group" controlId="login__form__password">
           <Form.Label>Password:</Form.Label>
           <Form.Control
             type="password"
@@ -116,11 +125,13 @@ const LoginForm = forwardRef(function LoginForm({ handleShowSignupForm }, ref) {
           </div>
           <span ref={spanEl}>Submit</span>
         </Button>
-        <p>Signing up? Click <span onClick={handleShowSignupForm}>here</span></p>
+        <p>
+          Signing up? Click <span onClick={handleShowSignupForm}>here</span>
+        </p>
       </Form>
     </>
   );
-}); 
+});
 
 // const LoginForm = ({ handleShowSignupForm }) => {
 //   const [isDisabled, setIsDisabled] = useState(true);
@@ -141,7 +152,7 @@ const LoginForm = forwardRef(function LoginForm({ handleShowSignupForm }, ref) {
 //       return username && password ? true : false;
 //     };
 //     setIsDisabled(!canBeSubmitted());
-    
+
 //     if (canBeSubmitted) {
 //     }
 //   }, [loginCredentials]);

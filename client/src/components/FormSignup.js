@@ -5,7 +5,7 @@ import pngDblArrow from "../images/login-double-arrow.png";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
-import { evaluateErrorsAndDisplayMessage } from "../utils/errors";
+import { displaySignupErrorMessage } from "../utils/errors";
 
 const SignUpForm = forwardRef(function SignupForm(props, ref) {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -48,6 +48,7 @@ const SignUpForm = forwardRef(function SignupForm(props, ref) {
   // handle submission of signup form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+
     try {
       // run signup mutation, passing in current values of signupCredentials state
       // await completion and destructure the data property from returned object
@@ -80,7 +81,7 @@ const SignUpForm = forwardRef(function SignupForm(props, ref) {
   return (
     <>
       <Form ref={ref} className="signup__form" onSubmit={handleFormSubmit}>
-        {hasErrors && evaluateErrorsAndDisplayMessage(errorsArr)}
+        {hasErrors && displaySignupErrorMessage(errorsArr)}
         <Form.Group className="form__group" controlId="signup__form__firstname">
           <Form.Label>First name:</Form.Label>
           <Form.Control
