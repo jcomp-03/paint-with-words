@@ -5,7 +5,6 @@ import useWebSocket from "react-use-websocket";
 import { getPermissionToRecordAudio } from "../utils/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPlay,
   faMicrophone,
   faPause,
 } from "@fortawesome/free-solid-svg-icons";
@@ -25,29 +24,27 @@ const GeneratePaintingForm = () => {
   let [isRecording, setIsRecording] = useState(false);
   let [socketUrl, setSocketUrl] = useState(null);
   let [texts, setTexts] = useState({});
-  // ref for submit button to conditionally render animation
-  const submitBtn = useRef(null);
+  // ref for record button to conditionally render animation
+  const recordBtn = useRef(null);
+  // ref for connection error element
+  const connectionErrorEl = useRef(null);
   // array which provides values for radio buttons
   const radioInputArray = [
     { "input-type": "radio", value: "1024x1024" },
     { "input-type": "radio", value: "512x512" },
     { "input-type": "radio", value: "256x256" },
   ];
-  const playIcon = <FontAwesomeIcon icon={faPlay} className="nav__icon" />;
+  // const playIcon = <FontAwesomeIcon icon={faPlay} className="nav__icon" />;
   const microphoneIcon = (
     <FontAwesomeIcon icon={faMicrophone} className="nav__icon" />
   );
   const pauseIcon = <FontAwesomeIcon icon={faPause} className="nav__icon" />;
 
-  const [getAAITemporaryToken, { data, loading, error }] =
-    useMutation(GET_ASSEMBLYAI_TOKEN);
-
   // useEffect hook runs when the recording state changes
   useEffect(() => {
-    console.log("isRecording useEffect ran");
     isRecording
-      ? submitBtn.current.classList.add("animation-pulse")
-      : submitBtn.current.classList.remove("animation-pulse");
+      ? recordBtn.current.classList.add("animation-pulse")
+      : recordBtn.current.classList.remove("animation-pulse");
   }, [isRecording]);
 
   // useEffect hook runs when image parameters state changes
@@ -60,27 +57,20 @@ const GeneratePaintingForm = () => {
     setIsDisabled(!canBeSubmitted());
   }, [imageParameters]);
 
-  // const [messageHistory, setMessageHistory] = useState({});
-  // function printErrorMessage(error) {
-  //   console.log('Your error message turned out to be', error);
-  // }
+  const [getAAITemporaryToken] =
+    useMutation(GET_ASSEMBLYAI_TOKEN);
+
   const { sendJsonMessage } = useWebSocket(socketUrl, {
     onMessage: (message) => {
       console.log(`***** Websocket MESSAGE *****`);
-      // console.log('message.data object is', message.data);
-      console.log("text before setting", texts);
       let msg = "";
       const res = JSON.parse(message.data);
-      // console.log(res);
       // JSON response from WebSocket API features keys like audio_start and text
       // In line of code below, assign a new property to object 'texts' with its name as
       // the current audio_start time and text as its value
       if (res.text) {
         setTexts({ ...texts, [res.audio_start]: res.text });
       }
-
-      console.log("text after setting", texts);
-
       // traverse the properties of the object 'texts', saving their names in an array 'keys'
       const keys = Object.keys(texts);
       keys.sort((a, b) => a - b);
@@ -127,20 +117,20 @@ const GeneratePaintingForm = () => {
     shouldReconnect: (closeEvent) => false,
   });
 
-  // const connectionStatus = {
-  //   [ReadyState.CONNECTING]: "Connecting",
-  //   [ReadyState.OPEN]: "Open",
-  //   [ReadyState.CLOSING]: "Closing",
-  //   [ReadyState.CLOSED]: "Closed",
-  //   [ReadyState.UNINSTANTIATED]: "Uninstantiated",
-  // }[readyState];
-
   // handler for DOM Exceptions
   const handleDOMException = (error) => {
     console.log("***** DOM Exception event: *****\n", error);
     // update state for socket and recording
     setSocketUrl(null);
     setIsRecording(false);
+  };
+
+  const handleDisplayConnectionError = () => {
+    connectionErrorEl.current.classList.add("display");
+    setTimeout(() => {
+      connectionErrorEl.current.classList.remove("display");
+    }, 5000);
+    return null;
   };
 
   // handler for record button
@@ -154,12 +144,15 @@ const GeneratePaintingForm = () => {
       }
     } else {
       const { data } = await getAAITemporaryToken();
-      //console.log(data.getAAITemporaryToken);
-      const { token } = data.getAAITemporaryToken.data;
+      const data2 = data.getAAITemporaryToken?.data;
+      if (!data2) {
+        handleDisplayConnectionError();
+        return null;
+      }
       // establish wss with AssemblyAI (AAI) at 16000 sample rate; by setting a url,
       // this causes websocket-related events to fire
       setSocketUrl(
-        `wss://api.assemblyai.com/v2/realtime/ws?sample_rate=16000&token=${token}`
+        `wss://api.assemblyai.com/v2/realtime/ws?sample_rate=16000&token=${data2.token}`
       );
     }
     // // negate current state of isRecording
@@ -181,7 +174,7 @@ const GeneratePaintingForm = () => {
     });
   };
 
-  const handleFormReset = () => {
+  const handleResetForm = () => {
     console.log("handleFormReset ran");
     // reset image parameters to default state;
     setImageParameters({
@@ -191,7 +184,7 @@ const GeneratePaintingForm = () => {
     });
   };
   // create method to search for books and set state on form submit
-  const handleFormSubmit = async (event) => {
+  const handleSubmitForm = async (event) => {
     event.preventDefault();
     console.log("handleFormSubmit ran");
 
@@ -225,18 +218,25 @@ const GeneratePaintingForm = () => {
 
   return (
     <>
-      <Form className="modal__body__form" onSubmit={handleFormSubmit}>
+      <Form className="paint__form" onSubmit={handleSubmitForm}>
         <Button
-          ref={submitBtn}
+          ref={recordBtn}
           className="form__button--record"
           id="record-btn"
           onClick={handleRecordClick}
         >
           {isRecording ? pauseIcon : microphoneIcon}
         </Button>
-        <p>Hello</p>
+        <p
+          id="axiosConnection"
+          className="form__button--error"
+          ref={connectionErrorEl}
+        >
+          Error connecting to AssemblyAI endpoint via Axios! Try again
+          momentarily.
+        </p>
 
-        <Form.Group className="form__group" controlId="formTextarea">
+        <Form.Group className="paint__form__group" controlId="formTextarea">
           <Form.Label>Your recorded speech translated as:</Form.Label>
           <Form.Control
             as="textarea"
@@ -248,7 +248,7 @@ const GeneratePaintingForm = () => {
           />
         </Form.Group>
 
-        <Form.Group className="form__group" controlId="formSelect">
+        <Form.Group className="paint__form__group" controlId="formSelect">
           <Form.Label>How many images do you wish to generate?</Form.Label>
           <Form.Select
             value={imageParameters.n}
@@ -271,7 +271,7 @@ const GeneratePaintingForm = () => {
           </Form.Select>
         </Form.Group>
 
-        <Form.Group className="form__group" controlId="formRadioButton">
+        <Form.Group className="paint__form__group" controlId="formRadioButton">
           <Form.Label>Select the image resolution:</Form.Label>
           {radioInputArray.map((item) => (
             <Form.Check
@@ -295,7 +295,7 @@ const GeneratePaintingForm = () => {
         >
           Submit
         </Button>
-        <Button className="form__button--reset" onClick={handleFormReset}>
+        <Button className="form__button--reset" onClick={handleResetForm}>
           Reset Form
         </Button>
       </Form>

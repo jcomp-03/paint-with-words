@@ -9,6 +9,11 @@
   --border3: solid 5px green;
   --themeColor1: rgba(208, 164, 211, 1);
   --themeColor2: rgba(229, 75, 240, 1);
+  --themeColor3: rgba(255, 255, 0, 1);
+  --fontFamily0: "Arial", "Verdana", sans-serif;
+  --fontFamily1: "Covered By Your Grace", cursive;
+  --fontFamily2: "Permanent Marker", cursive;
+
 }
 
 * {
@@ -58,7 +63,7 @@ body[class="modal-open"] {
   font-size: calc(2 * var(--stdFontSize));
   font-weight: 800;
   align-items: center;
-  font-family: "Covered By Your Grace", cursive;
+  font-family: var(--fontFamily1);
 }
 
 .header__div > p {
@@ -117,7 +122,11 @@ body[class="modal-open"] {
 }
 
 .login__title {
-  color: var(--themeColor2);
+  color: var(--textColor2);
+  text-align: center;
+  margin-top: 1rem;
+  font-size: calc(3 * var(--stdFontSize));
+  font-family: var(--fontFamily2);
 }
 
 .login__content {
@@ -133,7 +142,6 @@ body[class="modal-open"] {
   width: 30vw;
   height: 30vw;
   background-color: white;
-  margin-left: 5vw;
 }
 
 .login__form {
@@ -141,50 +149,123 @@ body[class="modal-open"] {
   flex-direction: column;
   padding: 1rem 2rem;
   width: 100%;
-  /* margin-right: 5vw; */
-  /* background-color: var(--themeColor2); */
+  background-image: linear-gradient(
+    45deg,
+    var(--themeColor1),
+    var(--themeColor2),
+    yellow
+  );
+  border-radius: 25px;
+  position: relative;
 }
 
 .login__form > :not(:first-child) {
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
-.login__form__group {
+.login__form--slide-out {
+  animation-name: slideOut;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+}
+
+.signup__form {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 2rem;
+  width: 100%;
+  background-image: linear-gradient(
+    45deg,
+    var(--themeColor1),
+    var(--themeColor2),
+    yellow
+  );
+  border-radius: 25px;
+  opacity: 1;
+  position: relative;
+}
+
+.signup__form--slide-in {
+  animation-name: slideIn;
+  animation-duration: 5s;
+  animation-fill-mode: forwards;
+  animation-delay: 4s;
+}
+
+@keyframes slideOut{
+  0%{
+    height: initial;
+    opacity: 1;
+    top: 0;
+  }
+  50%{
+    opacity: 0.5;
+  }
+  100%{
+    height: 0;
+    opacity: 0;
+    display: none;
+    top: -100px;
+  }
+}
+
+@keyframes slideIn {
+  0%{
+    top: -100px;
+  }
+  50%{
+  }
+  100%{
+
+    top: 0px;
+  }
+}
+
+
+
+.form__group {
   display: flex;
   flex-direction: column;
   padding: 0.25rem;
   /* border: solid 2px green; */
 }
-.login__form__group label {
-  color: var(--themeColor1);
+
+.form__group label {
+  color: var(--themeColor3);
   font-size: 1.25rem;
   font-weight: bold;
-  font-family: "Permanent Marker", cursive;
+  font-family: var(--fontFamily0);
   margin-bottom: 0.25rem;
 }
-.login__form__group input {
+
+.form__group input {
   padding: 0 0.5rem;
   height: 2rem;
-}
-.login__form__group small {
-  padding-top: 0.25rem;
-  color: var(--themeColor1);
-  font-family: "Permanent Marker", cursive;
+  border-radius: 10px;
+  border: none;
 }
 
-.login__form__button {
+.form__group small {
+  padding-top: 0.25rem;
+  color: var(--textColor1);
+  font-family: var(--fontFamily0);
+}
+
+.form__button {
   background-color: green;
-  font-size: 1.25rem;
+  font-size: calc(1.4 * var(--stdFontSize));
   font-weight: bold;
   padding: 1.5rem;
   position: relative;
   overflow: hidden;
   cursor: pointer;
   text-align: center;
+  border-radius: 25px;
+  border: none;
 }
 
-.login__form__button a {
-  font-family: "Permanent Marker", cursive;
+.form__button span {
+  font-family: var(--fontFamily2);
   color: white;
   text-decoration: none;
   position: relative;
@@ -192,10 +273,10 @@ body[class="modal-open"] {
   transition: all 0.35s ease-Out;
 }
 
-.login__form__button--arrows {
+.form__button--arrows {
   width: 100%;
   height: 100%;
-  background: var(--themeColor2);
+  background: var(--themeColor3);
   left: -550px;
   position: absolute;
   padding: 0;
@@ -206,17 +287,17 @@ body[class="modal-open"] {
   bottom: 0;
 }
 
-.login__form__button img {
+.form__button img {
   width: 40px;
   height: auto;
 }
 
-.login__form__button:hover .login__form__button--arrows {
+.form__button:hover .form__button--arrows {
   left: 0;
   color: white;
 }
 
-.login__form__button:hover a {
+.form__button:hover span {
   left: 550px;
 }
 
@@ -224,25 +305,27 @@ body[class="modal-open"] {
   .login__form {
     width: 75%;
   }
+  .signup__form {
+    width: 75%;
+  }
 }
+
 @media screen and (min-width: 768px) {
   .login__title {
     font-size: 3rem;
   }
-
   .login__content {
     flex-direction: row;
-    /* height: 50vh; */
-    justify-content: space-between;
+    justify-content: space-around;
   }
-
   .random {
     display: block;
   }
-
   .login__form {
     width: 50%;
-    margin-right: 5vw;
+  }
+  .signup__form {
+    width: 50%;
   }
 }
 
@@ -250,11 +333,14 @@ body[class="modal-open"] {
   .login__form {
     width: 30%;
   }
+  .signup__form {
+    width: 30%;
+  }
 }
 /**********************/
 /*****HOME PAGE*******/
 .svg {
-  font-family: "Covered By Your Grace", cursive;
+  font-family: var(--fontFamily1);
   font-weight: bolder;
   height: 25vh;
   width: 100%;
@@ -315,7 +401,7 @@ body[class="modal-open"] {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: "Permanent Marker", cursive;
+  font-family: var(--fontFamily2);
 }
 
 .footer__img {
@@ -387,11 +473,11 @@ body[class="modal-open"] {
   text-align: justify;
 }
 
-.modal__body__form {
+.paint__form {
   width: 100%;
 }
 
-.form__button--record {
+.paint__form .form__button--record {
   background-color: red;
   border-radius: 50%;
   height: 100px;
@@ -410,14 +496,38 @@ body[class="modal-open"] {
   animation: pulse 2s infinite;
 }
 
-.form__textarea {
+.paint__form .form__button--error {
+  font-size: calc(0.8 * var(--stdFontSize));
+  max-width: 50%;
+  text-align: center;
+  margin: 0 auto;
+  color: yellow;
+  display: none;
+}
+
+.display {
+  display: block;
+}
+
+.paint__form__group {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+  padding: 0.25rem;
+}
+
+.paint__form__group > label {
+  margin-bottom: 0.5rem;
+}
+
+.paint__form__group .form__textarea {
   resize: none;
   border-radius: 10px;
   padding: 0.5rem;
 }
 
-.form__select {
-  border-radius: 5px;
+.paint__form__group .form__select {
+  border-radius: 10px;
   appearance: none;
   background-image: url("./images/brush-brown.svg");
   background-repeat: no-repeat;
@@ -426,20 +536,20 @@ body[class="modal-open"] {
   padding-left: 0.5rem;
 }
 
-.form__radio {
+.paint__form__group .form__radio {
   display: flex;
 }
 
-.form__radio:not(:last-child) {
+.paint__form__group .form__radio:not(:last-child) {
   margin-bottom: 0.5rem;
 }
 
-.form__radio label {
+.paint__form__group .form__radio label {
   margin-bottom: 0;
   margin-left: 0.5rem;
 }
 
-.form__button--submit {
+.paint__form .form__button--submit {
   background-color: green;
   border-radius: 50px;
   display: block;
@@ -450,7 +560,7 @@ body[class="modal-open"] {
   padding: 1rem;
 }
 
-.form__button--reset {
+.paint__form .form__button--reset {
   border: none;
   background-color: black;
   width: 15%;
@@ -460,19 +570,15 @@ body[class="modal-open"] {
   margin-top: 0.5rem;
   max-width: 65px;
 }
-
-.form__group {
-  display: flex;
-  flex-direction: column;
-  margin: 1rem 0;
-  padding: 0.25rem;
-}
-
-.form__group > label {
-  margin-bottom: 0.5rem;
-}
 /***************************/
 /*****END PAINT PAGE*******/
+
+/**********************/
+/*****UTILITIES*******/
+.hide {
+  display: none;
+}
+
 
 @keyframes wiggle {
   0% {
@@ -503,6 +609,7 @@ body[class="modal-open"] {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   }
 }
+
 
 /* Media queries for responsive design */
 @media screen and (min-width: 576px) {
@@ -564,15 +671,16 @@ body[class="modal-open"] {
     width: 50%;
   }
 
-  .form__button--record {
+  .paint__form .form__button--record {
     margin: 1rem auto;
     padding: 1.5rem;
   }
 
-  .form__select {
+  .paint__form__group .form__select {
     height: 4vh;
   }
-  .form__button--submit {
+
+  .paint__form .form__button--submit {
     margin: 0 auto;
     padding: 1.5rem;
   }
