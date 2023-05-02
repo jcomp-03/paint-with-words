@@ -15,7 +15,9 @@ const typeDefs = gql`
     "The user's password"
     password: String
     "The user's list of images"
-    images: [Image!]
+    images: [Image]
+    "The user's list of friends"
+    friends: [User]
     "The user's token"
     token: String
   }

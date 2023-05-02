@@ -573,6 +573,94 @@ body[class="modal-open"] {
 /***************************/
 /*****END PAINT PAGE*******/
 
+/***********************/
+/*****PROFILE PAGE*******/
+.page__profile {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile__title {
+  color: var(--textColor2);
+  text-align: center;
+  margin-top: 1rem;
+  font-size: calc(2 * var(--stdFontSize));
+  font-family: var(--fontFamily2);
+}
+
+.profile__content {
+  display: flex;
+  flex-direction: column;
+  border: solid 2px red;
+  align-items: center;
+  margin-top: 1rem;
+  color: white;
+}
+
+.profile__details {
+  border: var(--border3);
+  display: flex;
+  flex-direction: column;
+  margin: 0 1rem 1rem;
+}
+
+.profile__details__div--image {
+  border: var(--border2);
+  margin: 0 1rem 1rem;
+  height: 25vh;
+}
+.profile__details__div--image img {
+  background-color: pink;
+  height: 100%;
+  width: auto;
+}
+
+.profile__details__div--info {
+  line-height: 1.5;
+  border: var(--border3);
+  margin: 0 1rem 1rem;
+}
+
+.profile__carousel {
+  border: var(--border3);
+  margin: 1rem;
+}
+
+@media screen and (min-width: 576px) {
+
+}
+
+@media screen and (min-width: 768px) {
+  .profile__title {
+    font-size: calc(3* var(--stdFontSize));
+  }
+  .profile__details {
+    flex-direction: row;
+  }
+  .profile__details__div--image {
+    width: 30%;
+  }
+  .profile__details__div--info {
+    width: 70%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+
+}
+/***************************/
+/*****END PROFILE PAGE*******/
+
+
+/***********************/
+/*****ERROR PAGE*******/
+.page__error {
+  color: white;
+}
+/***************************/
+/*****END ERROR PAGE*******/
+
 /**********************/
 /*****UTILITIES*******/
 .hide {

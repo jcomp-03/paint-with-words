@@ -14,10 +14,11 @@ import Footer from "./components/Footer";
 import HomePage from "./pages/Home";
 import PaintPage from "./pages/Paint";
 import LoginPage from "./pages/Login";
+import ProfilePage from "./pages/Profile";
 import ErrorPage from "./pages/Error";
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:8001/graphql',
+  uri: "http://localhost:8001/graphql",
 });
 
 // server can use the header to authenticate the user and
@@ -54,6 +55,7 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/paint" element={<PaintPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
               <Route path="*" element={<ErrorPage />} />
             </Routes>
           </main>
