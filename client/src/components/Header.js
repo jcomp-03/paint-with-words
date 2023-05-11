@@ -5,14 +5,26 @@ import {
   faGlobe,
   faKey,
   faAddressCard,
+  faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import Palette from "../images/palette.svg";
+import { Link } from "react-router-dom";
+import Auth from "../utils/auth";
 
 const Header = () => {
+  // log out the user when they click the logout icon
+  const handleLogoutClick = (event) => {
+    event.preventDefault();
+    console.log("Logout button clicked");
+    Auth.logout();
+  };
+
   return (
     <header className="header">
       <div className="header__div">
-        <p>Paint Now!</p>
+        <Link to={"/paint"}>
+          <p>Paint Now!</p>
+        </Link>
         <img
           className="header__div__image"
           src={Palette}
@@ -20,15 +32,35 @@ const Header = () => {
         />
       </div>
       <nav className="header__nav">
-        <FontAwesomeIcon
-          icon={faGlobe}
-          className="nav__icon nav__icon--globe"
-        />
-        <FontAwesomeIcon icon={faKey} className="nav__icon nav__icon--login" />
-        <FontAwesomeIcon
-          icon={faAddressCard}
-          className="nav__icon nav__icon--profile"
-        />
+        <Link to={"/publicGallery"}>
+          <FontAwesomeIcon
+            icon={faGlobe}
+            className="nav__icon nav__icon--globe"
+          />
+        </Link>
+        {Auth.loggedIn() ? (
+          <>
+            <Link to={"/profile"}>
+              <FontAwesomeIcon
+                icon={faAddressCard}
+                className="nav__icon nav__icon--profile"
+              />
+            </Link>
+            <a href="/" onClick={handleLogoutClick}>
+              <FontAwesomeIcon
+                icon={faRightFromBracket}
+                className="nav__icon nav__icon--profile"
+              />
+            </a>
+          </>
+        ) : (
+          <Link to={"/login"}>
+            <FontAwesomeIcon
+              icon={faKey}
+              className="nav__icon nav__icon--login"
+            />
+          </Link>
+        )}
       </nav>
     </header>
   );

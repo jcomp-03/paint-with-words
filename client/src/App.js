@@ -37,6 +37,8 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
+  // combine the authLink and httpLink objects so that every request retrieves the 
+  // token and sets the request headers before making the request to the API.
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });

@@ -66,7 +66,11 @@ body[class="modal-open"] {
   font-family: var(--fontFamily1);
 }
 
-.header__div > p {
+.header__div a {
+  text-decoration: none;
+}
+
+.header__div a > p {
   background-image: linear-gradient(
     270deg,
     var(--themeColor1),
@@ -93,9 +97,14 @@ body[class="modal-open"] {
   justify-content: space-around;
 }
 
+.header__nav a {
+  text-decoration: none;
+}
+
 .nav__icon {
   font-size: calc(1.5 * var(--stdFontSize));
   margin: 0 0.5rem;
+  color: var(--themeColor2);
 }
 /********************/
 /*****END HEADER*****/
