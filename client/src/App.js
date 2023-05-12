@@ -11,6 +11,7 @@ import { setContext } from "@apollo/client/link/context";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
+import LandingPage from "./pages/Landing";
 import HomePage from "./pages/Home";
 import PaintPage from "./pages/Paint";
 import LoginPage from "./pages/Login";
@@ -54,10 +55,14 @@ function App() {
           <Header />
           <main className="main">
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/home" element={<HomePage />} />
               <Route path="/paint" element={<PaintPage />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/profile">
+                <Route path=":username" element={<ProfilePage />} />
+                <Route path="" element={<ProfilePage />} />
+              </Route>
               <Route path="*" element={<ErrorPage />} />
             </Routes>
           </main>

@@ -680,6 +680,21 @@ body[class="modal-open"] {
   font-weight: bold;
 }
 
+.error-popup.error-login-required {
+  color: white;
+  font-size: 2rem;
+  font-family: var(--fontFamily0);
+  margin: 1rem 2rem;
+  width: 75%;
+  /* border: solid 5px red; */
+}
+
+.utility-anchor-tag {
+  text-decoration: none;
+  color: var(--themeColor1);
+}
+
+
 @keyframes wiggle {
   0% {
     transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);

@@ -32,7 +32,7 @@ const Header = () => {
         />
       </div>
       <nav className="header__nav">
-        <Link to={"/publicGallery"}>
+        <Link to={"/home"}>
           <FontAwesomeIcon
             icon={faGlobe}
             className="nav__icon nav__icon--globe"

@@ -28,6 +28,20 @@ export const QUERY_ME = gql`
   }
 `;
 
+export const QUERY_ME_BASIC = gql`
+  {
+    me {
+      _id
+      username
+      email
+      friends {
+        _id
+        username
+      }
+    }
+  }
+`;
+
 export const QUERY_USER = gql`
 query UserByUsername($username: String) {
   user(username: $username) {
@@ -49,7 +63,6 @@ query UserByUsername($username: String) {
         username
       }
     }
-    token
   }
 }
 `;

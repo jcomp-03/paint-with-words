@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const displaySignupErrorMessage = (errorsArray) => {
   const errArr = [];
   const errorsObj = errorsArray[0].extensions.exception.errors;
@@ -22,6 +24,16 @@ export const displayLoginErrorMessage = (message) => {
   return (
     <span key={`login-error-${message.length}`} className="error-popup">
       {message}
+    </span>
+  );
+};
+
+export const displayLoginRequiredMessage = () => {
+  return (
+    <span className="error-popup error-login-required">
+      Oops, this is awkward 😬. It looks like you came across a page that requires your being logged in, 
+      or simply doesn't exist as a location. Please
+      click <Link to={"/login"} className="utility-anchor-tag">here</Link> for the login page.
     </span>
   );
 };
