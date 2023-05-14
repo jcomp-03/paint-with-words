@@ -1,6 +1,8 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
+  scalar Date
+
   "A user type holds information about a person who has created an account"
   type User {
     _id: ID!
@@ -18,8 +20,25 @@ const typeDefs = gql`
     images: [Image]
     "The user's list of friends"
     friends: [User]
+    "The user's total number of paints made to date"
+    totalPaintingsMade: Int
+    "The user's total number of prompts made to date"
+    totalPromptsMade: Int
+    "The user's list of previous prompts made"
+    previousPrompts: [Prompt]
     "The user's token"
     token: String
+  }
+
+  "A prompt type holds information about a single prompt"
+  type Prompt {
+    _id: ID!
+    "The prompt text is the text generated from the user's transcribed speech and sent to the AI image generator"
+    promptText: String
+    "The date on which the prompt was made"
+    createdOn: Date!
+    "The prompt's owner"
+    username: String
   }
 
   "An image type holds information about a single image"
@@ -35,6 +54,8 @@ const typeDefs = gql`
     username: String
     "The image's reactions received"
     reactions: [Reaction!]
+    "The timestamp for when the image was created"
+    createdOn: Date!
   }
 
   "A reaction type holds information about a reaction to an image"

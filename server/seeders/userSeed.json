@@ -1,56 +1,142 @@
 [
-    { 
-        "firstName": "Molly",
-        "lastName": "Shannon",
-        "username" : "Molly48", 
-        "email" : "Molly48_Waters59@hotmail.com", 
-        "password" : "kGjRfUNWUIRwfS_", 
-        "friends" : [], 
-        "images" : [] 
-    },
-    { 
-        "firstName": "Katlyn",
-        "lastName": "Wiggins",
-        "username" : "Katlyn85", 
-        "email" : "Katlyn8550@gmail.com", 
-        "password" : "otK5YtXpcalD1cm", 
-        "friends" : [], 
-        "images" : [] 
-    },
-    { 
-        "firstName": "Lessie",
-        "lastName": "Kautzer",
-        "username" : "Lessie_Kautzer61", 
-        "email" : "Lessie_Kautzer61_Walker81@hotmail.com", 
-        "password" : "AP3EUTRZoxzsiHn", 
-        "friends" : [], 
-        "images" : [] 
-    },
-    { 
-        "firstName": "Elton",
-        "lastName": "Heaney",
-        "username" : "Elton_Heaney", 
-        "email" : "Elton_Heaney.Kemmer6@yahoo.com", 
-        "password" : "3dVgRgSQmrGLaQE", 
-        "friends" : [], 
-        "images" : [] 
-    },
-    { 
-        "firstName": "Josue",
-        "lastName": "Rodriguez",
-        "username" : "Josue67", 
-        "email" : "Josue6785@yahoo.com", 
-        "password" : "BNsmR75BHDH4na3", 
-        "friends" : [], 
-        "images" : [] 
-    },
-    { 
-        "firstName": "Jared",
-        "lastName": "Leto",
-        "username" : "Jaron98", 
-        "email" : "Jaron98_Will72@hotmail.com", 
-        "password" : "vNVT_y10PBpVaUV", 
-        "friends" : [], 
-        "images" : [] 
-    }
+  {
+    "_id": "5f23a84b481c2a4f4cd4ea6c",
+    "firstName": "Alice",
+    "lastName": "Smith",
+    "username": "ShadowWalkerX",
+    "email": "alice.smith@example.com",
+    "password": "qwerty123",
+    "images": [],
+    "friends": [
+      { "_id": "5f23a84b481c2a4f4cd4ea70", "username": "LunarLioness" },
+      { "_id": "5f23a84b481c2a4f4cd4ea72", "username": "CyberSiren" },
+      { "_id": "5f23a84b481c2a4f4cd4ea73", "username": "CelestialChaos" }
+    ]
+  },
+  {
+    "_id": "5f23a84b481c2a4f4cd4ea6d",
+    "firstName": "Bob",
+    "lastName": "Johnson",
+    "username": "ElectricDreamer",
+    "email": "bob.johnson@example.com",
+    "password": "password123",
+    "images": [],
+    "friends": [
+      { "_id": "5f23a84b481c2a4f4cd4ea71", "username": "MysticMarauder" },
+      { "_id": "5f23a84b481c2a4f4cd4ea73", "username": "CelestialChaos" }
+    ]
+  },
+  {
+    "_id": "5f23a84b481c2a4f4cd4ea6e",
+    "firstName": "Charlie",
+    "lastName": "Brown",
+    "username": "NeonKnight",
+    "email": "charlie.brown@example.com",
+    "password": "letmein123",
+    "images": [],
+    "friends": [{ "_id": "5f23a84b481c2a4f4cd4ea72", "username": "CyberSiren" }]
+  },
+  {
+    "_id": "5f23a84b481c2a4f4cd4ea6f",
+    "firstName": "Diana",
+    "lastName": "Jones",
+    "username": "PixelatedPhoenix",
+    "email": "diana.jones@example.com",
+    "password": "iloveyou123",
+    "images": [],
+    "friends": [
+      { "_id": "5f23a84b481c2a4f4cd4ea6d", "username": "ElectricDreamer" },
+      { "_id": "5f23a84b481c2a4f4cd4ea72", "username": "CyberSiren" },
+      { "_id": "5f23a84b481c2a4f4cd4ea73", "username": "CelestialChaos" },
+      { "_id": "5f23a84b481c2a4f4cd4ea74", "username": "TechnoTiger" }
+    ]
+  },
+  {
+    "_id": "5f23a84b481c2a4f4cd4ea70",
+    "firstName": "Erik",
+    "lastName": "Anderson",
+    "username": "LunarLioness",
+    "email": "erik.anderson@example.com",
+    "password": "abcdef123",
+    "images": [],
+    "friends": [
+      { "_id": "5f23a84b481c2a4f4cd4ea6c", "username": "ShadowWalkerX" },
+      { "_id": "5f23a84b481c2a4f4cd4ea71", "username": "MysticMarauder" },
+      { "_id": "5f23a84b481c2a4f4cd4ea73", "username": "CelestialChaos" },
+      { "_id": "5f23a84b481c2a4f4cd4ea75", "username": "GalacticGoddess" }
+    ]
+  },
+  {
+    "_id": "5f23a84b481c2a4f4cd4ea71",
+    "firstName": "Fiona",
+    "lastName": "Lee",
+    "username": "MysticMarauder",
+    "email": "fiona.lee@example.com",
+    "password": "12345678",
+    "images": [],
+    "friends": []
+  },
+  {
+    "_id": "5f23a84b481c2a4f4cd4ea72",
+    "firstName": "George",
+    "lastName": "Clark",
+    "username": "CyberSiren",
+    "email": "george.clark@example.com",
+    "password": "password1",
+    "images": [],
+    "friends": [
+      { "_id": "5f23a84b481c2a4f4cd4ea71", "username": "MysticMarauder" },
+      { "_id": "5f23a84b481c2a4f4cd4ea70", "username": "LunarLioness" },
+      { "_id": "5f23a84b481c2a4f4cd4ea6c", "username": "ShadowWalkerX" },
+      { "_id": "5f23a84b481c2a4f4cd4ea74", "username": "TechnoTiger" },
+      { "_id": "5f23a84b481c2a4f4cd4ea6f", "username": "PixelatedPhoenix" }
+    ]
+  },
+  {
+    "_id": "5f23a84b481c2a4f4cd4ea73",
+    "firstName": "Hannah",
+    "lastName": "Wilson",
+    "username": "CelestialChaos",
+    "email": "hannah.wilson@example.com",
+    "password": "hello123",
+    "images": [],
+    "friends": [
+      { "_id": "5f23a84b481c2a4f4cd4ea6e", "username": "NeonKnight" },
+      { "_id": "5f23a84b481c2a4f4cd4ea6f", "username": "PixelatedPhoenix" }
+    ]
+  },
+  {
+    "_id": "5f23a84b481c2a4f4cd4ea74",
+    "firstName": "Isaac",
+    "lastName": "Nguyen",
+    "username": "TechnoTiger",
+    "email": "isaac.nguyen@example.com",
+    "password": "p@ssw0rd",
+    "images": [],
+    "friends": [
+      { "_id": "5f23a84b481c2a4f4cd4ea6e", "username": "NeonKnight" },
+      { "_id": "5f23a84b481c2a4f4cd4ea6d", "username": "ElectricDreamer" },
+      { "_id": "5f23a84b481c2a4f4cd4ea72", "username": "CyberSiren" },
+      { "_id": "5f23a84b481c2a4f4cd4ea73", "username": "CelestialChaos" },
+      { "_id": "5f23a84b481c2a4f4cd4ea75", "username": "GalacticGoddess" },
+      { "_id": "5f23a84b481c2a4f4cd4ea71", "username": "MysticMarauder" },
+      { "_id": "5f23a84b481c2a4f4cd4ea70", "username": "LunarLioness" },
+      { "_id": "5f23a84b481c2a4f4cd4ea6c", "username": "ShadowWalkerX" },
+      { "_id": "5f23a84b481c2a4f4cd4ea74", "username": "TechnoTiger" },
+      { "_id": "5f23a84b481c2a4f4cd4ea6f", "username": "PixelatedPhoenix" }
+    ]
+  },
+  {
+    "_id": "5f23a84b481c2a4f4cd4ea75",
+    "firstName": "Jasmine",
+    "lastName": "Chen",
+    "username": "GalacticGoddess",
+    "email": "jasmine.chen@example.com",
+    "password": "qwertyuiop",
+    "images": [],
+    "friends": [
+      { "_id": "5f23a84b481c2a4f4cd4ea6d", "username": "ElectricDreamer" },
+      { "_id": "5f23a84b481c2a4f4cd4ea74", "username": "TechnoTiger" }
+    ]
+  }
 ]

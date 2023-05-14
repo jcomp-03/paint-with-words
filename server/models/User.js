@@ -47,6 +47,23 @@ const userSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: 'User'
       }
+    ],
+    totalPaintingsMade: {
+      type: Number,
+      default: 0
+    },
+    totalPromptsMade: {
+      type: Number,
+      default: 0,
+      get: function() {
+        return this.previousPrompts.length;
+      }
+    },
+    previousPrompts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Prompt'
+      }
     ]
   },
   {
@@ -73,6 +90,10 @@ userSchema.methods.isCorrectPassword = async function(password) {
 
 userSchema.virtual('friendCount').get(function() {
   return this.friends.length;
+});
+
+userSchema.virtual('promptCount').get(function() {
+  return this.previousPrompts.length;
 });
 
 const User = model('User', userSchema);

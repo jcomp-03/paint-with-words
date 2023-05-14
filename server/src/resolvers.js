@@ -1,10 +1,14 @@
 const { User, Image } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
+
 // import signToken function
 const { signToken } = require("../utils/authorization");
 const { assemblyAI } = require("../utils/axios");
+const { dateScalar } = require('./customScalars');
 
 const resolvers = {
+  Date: dateScalar,
+
   Query: {
     me: async (parent, args, context) => {
       // if there is no user property in the context, then we know the user is not authenticated
@@ -13,7 +17,8 @@ const resolvers = {
         const userData = await User.findOne({ _id: context.user._id })
           .select("-__v -password")
           .populate("images")
-          .populate("friends");
+          .populate("friends")
+          .populate("previousPrompts");
         return userData;
       }
 
@@ -23,13 +28,15 @@ const resolvers = {
       return User.findOne({ username })
         .select("-__v -password")
         .populate("friends")
-        .populate("images");
+        .populate("images")
+        .populate("previousPrompts");
     },
     users: async () => {
       return User.find()
         .select("-__v -password")
         .populate("friends")
-        .populate("images");
+        .populate("images")
+        .populate("previousPrompts");
     },
     images: async (parent, { username }) => {
       const params = username ? { username } : {};

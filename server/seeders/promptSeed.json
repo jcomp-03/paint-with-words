@@ -1,0 +1,182 @@
+[
+  {
+    "_id": "5f7a5baffa5a9c0d08f136be",
+    "promptText": "Generate an AI image of a futuristic city at night with neon lights.",
+    "createdOn": "01/23/2022",
+    "username": "ShadowWalkerX"
+  },
+  {
+    "_id": "5f7a5bb2d391fa8f94711b7b",
+    "promptText": "Create an AI image of a mythical creature that has never been seen before.",
+    "createdOn": "12/18/2021",
+    "username": "ElectricDreamer"
+  },
+  {
+    "_id": "5f7a5bb566ff40b1d3d2d0de",
+    "promptText": "Generate an AI image of a beautiful garden with flowers and a waterfall.",
+    "createdOn": "09/15/2022",
+    "username": "NeonKnight"
+  },
+  {
+    "_id": "5f7a5bb8fb3e7bf2b5b10be8",
+    "promptText": "Create an AI image of a futuristic car with a sleek design and advanced technology.",
+    "createdOn": "06/12/2022",
+    "username": "PixelatedPhoenix"
+  },
+  {
+    "_id": "5f7a5bbb1f9fbf9be3aafcb7",
+    "promptText": "Generate an AI image of a majestic dragon flying over a mountain range.",
+    "createdOn": "07/28/2021",
+    "username": "LunarLioness"
+  },
+  {
+    "_id": "5f7a5bbef9f05a11ea1f95a5",
+    "promptText": "Create an AI image of an underwater world with colorful coral reefs and exotic sea creatures.",
+    "createdOn": "03/09/2022",
+    "username": "MysticMarauder"
+  },
+  {
+    "_id": "5f7a5bc2200a9cf9b407d1d7",
+    "promptText": "Generate an AI image of a space station orbiting around a planet in a distant galaxy.",
+    "createdOn": "05/21/2021",
+    "username": "CyberSiren"
+  },
+  {
+    "_id": "5f7a5bc52f14dbf335bb9f08",
+    "promptText": "Create an AI image of a steampunk world with airships and mechanical creatures.",
+    "createdOn": "10/11/2021",
+    "username": "CelestialChaos"
+  },
+  {
+    "_id": "5f7a5bc88e0480f739b331b6",
+    "promptText": "Generate an AI image of a magical forest with glowing mushrooms and mystical creatures.",
+    "createdOn": "02/27/2022",
+    "username": "TechnoTiger"
+  },
+  {
+    "_id": "5f7a5bcbc7431b390b105d1f",
+    "promptText": "Create an AI image of a cyberpunk city with towering skyscrapers and holographic advertisements.",
+    "createdOn": "08/02/2021",
+    "username": "GalacticGoddess"
+  },
+  {
+    "_id": "61590f787abceba7d7d39b10",
+    "promptText": "Generate an image of a futuristic cityscape with flying cars",
+    "createdOn": "09/28/2022",
+    "username": "TechnoTiger"
+  },
+  {
+    "_id": "61590f787abceba7d7d39b11",
+    "promptText": "Create a surreal image of a giant clock melting like cheese",
+    "createdOn": "08/16/2021",
+    "username": "PixelatedPhoenix"
+  },
+  {
+    "_id": "61590f787abceba7d7d39b12",
+    "promptText": "Generate an image of a peaceful underwater world with bioluminescent creatures",
+    "createdOn": "06/11/2023",
+    "username": "NeonKnight"
+  },
+  {
+    "_id": "61590f787abceba7d7d39b13",
+    "promptText": "Create a chaotic image of a forest overtaken by vines and thorns",
+    "createdOn": "01/21/2023",
+    "username": "ShadowWalkerX"
+  },
+  {
+    "_id": "61590f787abceba7d7d39b14",
+    "promptText": "Generate an image of a colorful galaxy with a black hole in the center",
+    "createdOn": "11/09/2021",
+    "username": "CelestialChaos"
+  },
+  {
+    "_id": "61590f787abceba7d7d39b15",
+    "promptText": "Create an image of a haunted house with ghostly apparitions",
+    "createdOn": "04/30/2023",
+    "username": "MysticMarauder"
+  },
+  {
+    "_id": "61590f787abceba7d7d39b16",
+    "promptText": "Generate an image of a mythical creature like a dragon or a unicorn",
+    "createdOn": "02/22/2022",
+    "username": "CyberSiren"
+  },
+  {
+    "_id": "61590f787abceba7d7d39b17",
+    "promptText": "Create an image of a post-apocalyptic world with abandoned buildings and vehicles",
+    "createdOn": "10/03/2022",
+    "username": "GalacticGoddess"
+  },
+  {
+    "_id": "61590f787abceba7d7d39b18",
+    "promptText": "Generate an image of a futuristic lab with advanced technology and robotics",
+    "createdOn": "05/19/2023",
+    "username": "LunarLioness"
+  },
+  {
+    "_id": "61590f787abceba7d7d39b19",
+    "promptText": "Create an image of a magical forest with talking animals and glowing flowers",
+    "createdOn": "03/14/2022",
+    "username": "ElectricDreamer"
+  },
+  {
+    "_id": "60aef3a758c6b02b6e844ee9",
+    "promptText": "Generate an AI image of a futuristic city skyline at sunset",
+    "createdOn": "05/23/2022",
+    "username": "PixelatedPhoenix"
+  },
+  {
+    "_id": "60aef3a758c6b02b6e844eea",
+    "promptText": "Create an AI image of a mythical creature from Greek mythology",
+    "createdOn": "06/18/2022",
+    "username": "LunarLioness"
+  },
+  {
+    "_id": "60aef3a758c6b02b6e844eeb",
+    "promptText": "Generate an AI image of an alien spaceship in deep space",
+    "createdOn": "05/31/2022",
+    "username": "MysticMarauder"
+  },
+  {
+    "_id": "60aef3a758c6b02b6e844eec",
+    "promptText": "Create an AI image of a steampunk-style robot butler",
+    "createdOn": "06/12/2022",
+    "username": "CyberSiren"
+  },
+  {
+    "_id": "60aef3a758c6b02b6e844eed",
+    "promptText": "Generate an AI image of a mermaid lounging on a rock in the ocean",
+    "createdOn": "06/01/2022",
+    "username": "CelestialChaos"
+  },
+  {
+    "_id": "60aef3a758c6b02b6e844eee",
+    "promptText": "Create an AI image of a dragon breathing fire in a forest",
+    "createdOn": "06/19/2022",
+    "username": "TechnoTiger"
+  },
+  {
+    "_id": "60aef3a758c6b02b6e844eef",
+    "promptText": "Generate an AI image of a cyberpunk cityscape at night",
+    "createdOn": "06/10/2022",
+    "username": "GalacticGoddess"
+  },
+  {
+    "_id": "60aef3a758c6b02b6e844ef0",
+    "promptText": "Create an AI image of a giant robot fighting a giant monster in a city",
+    "createdOn": "06/04/2022",
+    "username": "ShadowWalkerX"
+  },
+  {
+    "_id": "60aef3a758c6b02b6e844ef1",
+    "promptText": "Generate an AI image of a spaceship orbiting a distant planet",
+    "createdOn": "05/29/2022",
+    "username": "ElectricDreamer"
+  },
+  {
+    "_id": "60aef3a758c6b02b6e844ef2",
+    "promptText": "Create an AI image of a magical portal leading to a fantasy world",
+    "createdOn": "06/14/2022",
+    "username": "NeonKnight"
+  }
+]

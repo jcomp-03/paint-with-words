@@ -44,7 +44,7 @@ const ProfilePage = (props) => {
       <div className="profile__content">
         <div className="profile__details">
           <div className="profile__details__div--image">
-            <img src={profilePic} className="" />
+            <img src={profilePic} className="" alt="A headshot of the user" />
           </div>
           <div className="profile__details__div--info">
             Sit ea dolor eiusmod exercitation occaecat fugiat proident proident

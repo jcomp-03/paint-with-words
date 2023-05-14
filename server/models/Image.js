@@ -19,10 +19,9 @@ const imageSchema = new Schema(
       type: String,
     },
     reactions: [reactionSchema],
-    createdAt: {
+    createdOn: {
       type: Date,
       default: Date.now,
-      get: (timestamp) => dateFormat(timestamp),
     }
   },
   {
