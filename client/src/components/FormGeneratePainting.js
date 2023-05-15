@@ -4,11 +4,8 @@ import Button from "react-bootstrap/Button";
 import useWebSocket from "react-use-websocket";
 import { getPermissionToRecordAudio } from "../utils/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMicrophone,
-  faPause,
-} from "@fortawesome/free-solid-svg-icons";
-import { GET_ASSEMBLYAI_TOKEN } from "../utils/mutations";
+import { faMicrophone, faPause } from "@fortawesome/free-solid-svg-icons";
+import { GET_ASSEMBLYAI_TOKEN, CREATE_OPENAI_IMAGE } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
 
 const GeneratePaintingForm = () => {
@@ -20,6 +17,9 @@ const GeneratePaintingForm = () => {
     n: 1,
     size: "",
   });
+  const [hasCompleted, setHasCompleted] = useState(false);
+  const [hasErrors, setHasErrors] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   // state for websocket-related stuff
   let [isRecording, setIsRecording] = useState(false);
   let [socketUrl, setSocketUrl] = useState(null);
@@ -57,8 +57,18 @@ const GeneratePaintingForm = () => {
     setIsDisabled(!canBeSubmitted());
   }, [imageParameters]);
 
-  const [getAssemblyAIToken] =
-    useMutation(GET_ASSEMBLYAI_TOKEN);
+  // useEffect hook runs when hasErrors state changes
+  useEffect(() => {
+    if (!hasErrors) return;
+    connectionErrorEl.current.classList.add("display");
+    setTimeout(() => {
+      connectionErrorEl.current.classList.remove("display");
+    }, 5000)
+    return;
+  }, [hasErrors]);
+
+  const [getAssemblyAiToken] = useMutation(GET_ASSEMBLYAI_TOKEN);
+  const [createOpenAiImage] = useMutation(CREATE_OPENAI_IMAGE);
 
   const { sendJsonMessage } = useWebSocket(socketUrl, {
     onMessage: (message) => {
@@ -100,7 +110,7 @@ const GeneratePaintingForm = () => {
       console.log(`***** Websocket OPENED *****`);
       // request permission and instantiate recorder
       getPermissionToRecordAudio(socketUrl, sendJsonMessage)
-        .then(recorder => {
+        .then((recorder) => {
           // what now?
           recorder.startRecording();
           console.log(
@@ -125,15 +135,6 @@ const GeneratePaintingForm = () => {
     setIsRecording(false);
   };
 
-  // handler for AssemblyAI connection issues
-  const handleDisplayConnectionError = () => {
-    connectionErrorEl.current.classList.add("display");
-    setTimeout(() => {
-      connectionErrorEl.current.classList.remove("display");
-    }, 5000);
-    return null;
-  };
-
   // handler for record button
   const handleRecordClick = async () => {
     if (isRecording) {
@@ -144,10 +145,11 @@ const GeneratePaintingForm = () => {
         setIsRecording(!isRecording);
       }
     } else {
-      const { data } = await getAssemblyAIToken();
-      const data2 = data.getAssemblyAIToken?.data;
+      const { data } = await getAssemblyAiToken();
+      const data2 = data.getAssemblyAiToken?.data;
       if (!data2) {
-        handleDisplayConnectionError();
+        // set hasErrors to true
+        setHasErrors(true);
         return null;
       }
       // establish wss with AssemblyAI (AAI) at 16000 sample rate; by setting a url,
@@ -184,33 +186,26 @@ const GeneratePaintingForm = () => {
       size: "",
     });
   };
-  // create method to search for books and set state on form submit
+
+  // handler for submitting form information and creating an image
   const handleSubmitForm = async (event) => {
     event.preventDefault();
     console.log("handleFormSubmit ran");
-
-    //   try {
-    //     const response = await searchGoogleBooks(searchInput);
-
-    //     if (!response.ok) {
-    //       throw new Error("something went wrong!");
-    //     }
-
-    //     const { items } = await response.json();
-
-    //     const bookData = items.map((book) => ({
-    //       bookId: book.id,
-    //       authors: book.volumeInfo.authors || ["No author to display"],
-    //       title: book.volumeInfo.title,
-    //       description: book.volumeInfo.description,
-    //       image: book.volumeInfo.imageLinks?.thumbnail || "",
-    //     }));
-
-    //     setSearchedBooks(bookData);
-    //     setSearchInput("");
-    //   } catch (err) {
-    //     console.error(err);
-    //   }
+    //destructure the data and error property from returned object
+    const { data, errors } = await createOpenAiImage({
+      variables: { ...imageParameters },
+      onError: () => setHasErrors(true),
+      onCompleted: () => setHasCompleted(true),
+    });
+    // change errors state to be whatever errors were returned by Apollo Server
+    if (errors) {
+      setErrorMsg(errors.message);
+      console.log("errorMsg is", errorMsg);
+      return null;
+    }
+    // what do I do with the returned data now from OpenAI??
+    console.log('createOpenAiImage data is', data);
+    
   };
 
   return (
@@ -229,7 +224,7 @@ const GeneratePaintingForm = () => {
           className="form__button--error"
           ref={connectionErrorEl}
         >
-          Error connecting to AssemblyAI endpoint via Axios! Try again
+          Error connecting to AssemblyAI endpoint or OpenAI endpoint! Try again
           momentarily.
         </p>
 

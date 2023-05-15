@@ -68,14 +68,40 @@ const typeDefs = gql`
   }
 
   "A type constructed for holding the response from posting to https://api.assemblyai.com/v2/realtime/token"
-  type AAITemporaryTokenResponse {
+  type AssemblyAiTokenResponse {
     msg: String
-    data: AAITemporaryToken
+    data: AssemblyAiToken
   }
 
   "A type constructed for holding the temporary token issued by AssemblyAI"
-  type AAITemporaryToken {
+  type AssemblyAiToken {
     token: String
+  }
+
+  "A type constructed for holding the response from posting to https://api.openai.com/v1/images/generations"
+  type OpenAiImageResponse {
+    "The response status code"
+    status: Int
+    "The response status text"
+    statusText: String
+    "The object which holds the image data"
+    data: OpenAiImageObject
+  }
+
+  "A type constructed for representing the object which holds the timestamp and array of image objects"
+  type OpenAiImageObject {
+    "The timestamp associated with the creation of the image(s)"
+    created: Int
+    "The array of images returned from the response"
+    data: [OpenAiImageDataObject!]
+  }
+
+  "A type constructed for representing each individual image's data"
+  type OpenAiImageDataObject {
+    "The image data is returned via a url"
+    url: String
+    "Alternatively, the image data can be returned in b64 json format"
+    b64_json: String
   }
 
   "An authorization type holds token information associated with a user"
@@ -92,7 +118,7 @@ const typeDefs = gql`
     "Query to get all users"
     users: [User!]
     "Query to get a user by its username"
-    user(username: String): User
+    user(username: String!): User
     "Query to get all images, from all the users"
     images: [Image!]
     "Query to get all images by a single user"
@@ -113,7 +139,13 @@ const typeDefs = gql`
       password: String!
     ): Authorization
     "Mutation for retrieving a temporary token from AssemblyAI for real-time transcription"
-    getAssemblyAIToken: AAITemporaryTokenResponse
+    getAssemblyAiToken: AssemblyAiTokenResponse
+    "Mutation for sending a POST request to OpenAI endpoint for the creation of images"
+    createOpenAiImages(
+      prompt: String!
+      n: Int!
+      size: String!
+    ): OpenAiImageResponse
   }
 `;
 

@@ -5,7 +5,7 @@ const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/authorization");
 const { assemblyAI } = require("../utils/axios");
 const { dateScalar } = require('./customScalars');
-const { openAI } = require("./datasources/openAIClass");
+const { openAiInstance } = require("./datasources/openAIClass");
 
 const resolvers = {
   Date: dateScalar,
@@ -78,7 +78,7 @@ const resolvers = {
       // return an object which combines the signed token and user information
       return { token, user };
     },
-    getAssemblyAIToken: async (parent, args, context, info) => {
+    getAssemblyAiToken: async (parent, args, context, info) => {
       try {
         // fetch temp token from AssemblyAI for real-time transcription
         const response = await assemblyAI.post("/realtime/token", {
@@ -98,6 +98,11 @@ const resolvers = {
         );
       }
     },
+    createOpenAiImages: async (parent, { prompt, n, size }) => {
+        const response = await openAiInstance.createImage(prompt, n, size);
+        console.log('createOpenAiImages response', response);
+        return response;
+    }
   },
 };
 

@@ -17,11 +17,13 @@ class OpenAIClass {
       const response = await openai.createImage({
         prompt,
         n,
-        size,
+        size
+        // response_format: "b64_json"
       });
-      console.log('makeImage', response.data.data[0].url + "\n\n");
+      //console.log('makeImage', response.data.data[0].url + "\n\n");
       // destructure what I want from response
       const { status, statusText, data } = response;
+      console.log('response.data is', data);
       return {
         status,
         statusText,
@@ -35,6 +37,8 @@ class OpenAIClass {
     }
   }
 }
+
+const openAiInstance = new OpenAIClass();
 
 // define async function editOrExtendImage
 const editOrExtendImage = async (
@@ -92,17 +96,6 @@ const varyImage = async (imageLocation, n, size) => {
 
 // editOrExtendImage("square.png", "mask.png", "Portrait photo of an anthropomorphic cow", 1, "1024x1024");
 // varyImage("square.png", 3, "1024x1024");
-
-const openAiInstance = new OpenAIClass();
-// async function test() {
-//   const response = await openAiInstance.createImage(
-//     "A dog riding a surfboard in turbulent water, as a pencil drawing.",
-//     1,
-//     "1024x1024"
-//   );
-//   console.log("response is", response);
-// }
-// test();
 module.exports = {
   openAiInstance
 };
