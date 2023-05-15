@@ -16,12 +16,9 @@ function NewPaintingModal() {
     setShowModal(false);
   };
 
-  const showModalOnFirstRender = () => setShowModal(true);
-
   // set showModal state to true after the initial rendering (mounting)
   useEffect(() => {
-    console.log("showModalOnFirstRender useEffect ran");
-    showModalOnFirstRender();
+    setShowModal(true);
   }, []);
 
   return (

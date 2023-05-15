@@ -38,8 +38,8 @@ export const LOGIN_USER = gql`
 `;
 
 export const GET_ASSEMBLYAI_TOKEN = gql`
-  mutation GetAAITemporaryToken {
-    getAAITemporaryToken {
+  mutation GetAssemblyAIToken {
+    getAssemblyAIToken {
       msg
       data {
         token

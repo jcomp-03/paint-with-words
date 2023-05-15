@@ -57,7 +57,7 @@ const GeneratePaintingForm = () => {
     setIsDisabled(!canBeSubmitted());
   }, [imageParameters]);
 
-  const [getAAITemporaryToken] =
+  const [getAssemblyAIToken] =
     useMutation(GET_ASSEMBLYAI_TOKEN);
 
   const { sendJsonMessage } = useWebSocket(socketUrl, {
@@ -100,7 +100,7 @@ const GeneratePaintingForm = () => {
       console.log(`***** Websocket OPENED *****`);
       // request permission and instantiate recorder
       getPermissionToRecordAudio(socketUrl, sendJsonMessage)
-        .then((recorder) => {
+        .then(recorder => {
           // what now?
           recorder.startRecording();
           console.log(
@@ -125,6 +125,7 @@ const GeneratePaintingForm = () => {
     setIsRecording(false);
   };
 
+  // handler for AssemblyAI connection issues
   const handleDisplayConnectionError = () => {
     connectionErrorEl.current.classList.add("display");
     setTimeout(() => {
@@ -143,8 +144,8 @@ const GeneratePaintingForm = () => {
         setIsRecording(!isRecording);
       }
     } else {
-      const { data } = await getAAITemporaryToken();
-      const data2 = data.getAAITemporaryToken?.data;
+      const { data } = await getAssemblyAIToken();
+      const data2 = data.getAssemblyAIToken?.data;
       if (!data2) {
         handleDisplayConnectionError();
         return null;
@@ -187,10 +188,6 @@ const GeneratePaintingForm = () => {
   const handleSubmitForm = async (event) => {
     event.preventDefault();
     console.log("handleFormSubmit ran");
-
-    //   if (!searchInput) {
-    //     return false;
-    //   }
 
     //   try {
     //     const response = await searchGoogleBooks(searchInput);

@@ -5,6 +5,7 @@ const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/authorization");
 const { assemblyAI } = require("../utils/axios");
 const { dateScalar } = require('./customScalars');
+const { openAI } = require("./datasources/openAIClass");
 
 const resolvers = {
   Date: dateScalar,
@@ -77,7 +78,7 @@ const resolvers = {
       // return an object which combines the signed token and user information
       return { token, user };
     },
-    getAAITemporaryToken: async (parent, args, context, info) => {
+    getAssemblyAIToken: async (parent, args, context, info) => {
       try {
         // fetch temp token from AssemblyAI for real-time transcription
         const response = await assemblyAI.post("/realtime/token", {
@@ -87,12 +88,12 @@ const resolvers = {
         const { data } = response;
         // return an object with msg and data
         return {
-          msg: "getAAITemporaryToken: Temporary token retrieved.",
+          msg: "getAssemblyAIToken: Temporary token retrieved.",
           data,
         };
       } catch (error) {
         console.log(
-          "***** Error! Resolver getAAITemporaryToken *****\n",
+          "***** Error! Resolver getAssemblyAIToken *****\n",
           error
         );
       }

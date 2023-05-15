@@ -413,8 +413,13 @@ body[class="modal-open"] {
   font-family: var(--fontFamily2);
 }
 
+.footer__div {
+  display: flex;
+}
+
 .footer__img {
   max-width: 5rem;
+  margin: 0.5rem;
 }
 
 .footer__img.img__react {
@@ -515,7 +520,7 @@ body[class="modal-open"] {
 }
 
 .display {
-  display: block;
+  display: block !important;
 }
 
 .paint__form__group {

@@ -113,7 +113,7 @@ const typeDefs = gql`
       password: String!
     ): Authorization
     "Mutation for retrieving a temporary token from AssemblyAI for real-time transcription"
-    getAAITemporaryToken: AAITemporaryTokenResponse
+    getAssemblyAIToken: AAITemporaryTokenResponse
   }
 `;
 
