@@ -46,8 +46,8 @@ const typeDefs = gql`
     _id: ID!
     "The image description is the description provided by the user at the moment of creation"
     description: String
-    "The image location stores the url to where the image is saved/stored"
-    imageLocation: String
+    "The image stored as binary data"
+    binData: String
     "The image size holds the resolution of the image"
     size: String # wanted to use enum ImageSize but encountered issues. Revisit
     "The image's owner"
@@ -141,11 +141,15 @@ const typeDefs = gql`
     "Mutation for retrieving a temporary token from AssemblyAI for real-time transcription"
     getAssemblyAiToken: AssemblyAiTokenResponse
     "Mutation for sending a POST request to OpenAI endpoint for the creation of images"
-    createOpenAiImages(
+    createSomeImages(
       prompt: String!
       n: Int!
       size: String!
     ): OpenAiImageResponse
+    "Mutation for adding an image to a user's collection"
+    addImageToUserCollection: User
+    "Mutation for removing an image from a user's collection"
+    deleteAnImage(imgId: ID!): Image
   }
 `;
 

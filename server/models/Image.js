@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 const reactionSchema = require('./Reaction');
-const dateFormat = require('../utils/dateFormat');
+const { decodeBase64JsonAndSaveAsBuffer } = require('../utils/helper');
 
 const imageSchema = new Schema(
   {
@@ -8,9 +8,10 @@ const imageSchema = new Schema(
       type: String,
       maxlength: 280,
     },
-    imageLocation: {
-      type: String,
-      maxlength: 280,
+    binData: {
+      type: Schema.Types.Buffer,
+      alias: 'b64_json',
+      set: decodeBase64JsonAndSaveAsBuffer
     },
     size: {
       type: String,

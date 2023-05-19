@@ -4,7 +4,7 @@ const { AuthenticationError } = require("apollo-server-express");
 // import signToken function
 const { signToken } = require("../utils/authorization");
 const { assemblyAI } = require("../utils/axios");
-const { dateScalar } = require('./customScalars');
+const { dateScalar } = require("./customScalars");
 const { openAiInstance } = require("./datasources/openAIClass");
 
 const resolvers = {
@@ -92,17 +92,51 @@ const resolvers = {
           data,
         };
       } catch (error) {
-        console.log(
-          "***** Error! Resolver getAssemblyAIToken *****\n",
-          error
-        );
+        console.log("----- Error! Resolver getAssemblyAIToken -----\n", error);
       }
     },
-    createOpenAiImages: async (parent, { prompt, n, size }) => {
-        const response = await openAiInstance.createImage(prompt, n, size);
-        console.log('createOpenAiImages response', response);
-        return response;
-    }
+    createSomeImages: async (parent, { prompt, n, size }, context, info) => {
+      try {
+        // if the user property of context exists (it should exist if login was successful),
+        // then make http post request to OpenAI, passing in prompt, n, and desired size of image
+        if (context.user) {
+          const response = await openAiInstance.createImage(prompt, n, size);
+          const { data } = response.status === 200 ? response : null;
+          const { created: createdOn, data: imageArray } = data ? data : null;
+          // add properties to each image object and then create new documents in Image collection
+          imageArray.forEach((imgObj) => {
+            // assign image's description to be prompt that was used
+            imgObj.description = prompt;
+            // assign image's size to be the size that was used
+            imgObj.size = size;
+            // assign image's timestamp to be createdOn; noticed timestamp was off, so had to add triple zeros to bring it to current day/time
+            imgObj.createdOn = createdOn + "000";
+            // assign image owner to the currently logged-in user, pulled from context!
+            imgObj.username = context.user.username;
+          });
+          const someResponse = await Image.create(imageArray);
+          console.log('someResponse is', someResponse);
+          return response;
+        }
+      } catch (error) {
+        console.log("----- Error! Resolver createSomeImages -----\n", error);
+      }
+    },
+    deleteAnImage: async (parent, { imgId }, context, info) => {
+      try {
+        if (context.user) {
+          const response = await Image.findOneAndDelete({ _id: imgId }).select(
+            "-__v -reactions"
+          );
+          if (!response) {
+            throw new Error("Image id passed to resolver was not a valid id.");
+          }
+          return response;
+        }
+      } catch (error) {
+        console.log("----- Error! Resolver removeAnImage -----\n", error);
+      }
+    },
   },
 };
 

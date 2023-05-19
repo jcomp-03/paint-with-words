@@ -17,13 +17,11 @@ class OpenAIClass {
       const response = await openai.createImage({
         prompt,
         n,
-        size
-        // response_format: "b64_json"
+        size,
+        response_format: "b64_json"
       });
-      //console.log('makeImage', response.data.data[0].url + "\n\n");
       // destructure what I want from response
       const { status, statusText, data } = response;
-      console.log('response.data is', data);
       return {
         status,
         statusText,
