@@ -20,17 +20,10 @@ const server = new ApolloServer({
   // every request performed will have an authentication check done
   // the updated request object will be passed to the resolvers as the context
   context: authMiddleware,
-  csrfPrevention: true,
 });
 
 const routes = require("./routes");
 const app = express();
-// to use graphql-uploads, we must attach non-empty apollo-require-preflight header along with all requests;
-// this is required because we enabled cross-site request forgery (CSRF) prevention in Apollo Server instance
-app.use(function (req, res, next) {
-  req.headers["apollo-require-preflight"] = "true";
-  next();
-});
 app.use(express.json());
 //app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname)));

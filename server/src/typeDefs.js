@@ -2,6 +2,7 @@ const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   scalar Date
+  scalar ImgBinData
 
   "A user type holds information about a person who has created an account"
   type User {
@@ -47,7 +48,7 @@ const typeDefs = gql`
     "The image description is the description provided by the user at the moment of creation"
     description: String
     "The image stored as binary data"
-    binData: String
+    binData: ImgBinData
     "The image size holds the resolution of the image"
     size: String # wanted to use enum ImageSize but encountered issues. Revisit
     "The image's owner"

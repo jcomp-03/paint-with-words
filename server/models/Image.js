@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose");
 const reactionSchema = require('./Reaction');
-const { decodeBase64JsonAndSaveAsBuffer } = require('../utils/helper');
 
 const imageSchema = new Schema(
   {
@@ -11,7 +10,6 @@ const imageSchema = new Schema(
     binData: {
       type: Schema.Types.Buffer,
       alias: 'b64_json',
-      set: decodeBase64JsonAndSaveAsBuffer
     },
     size: {
       type: String,

@@ -1,4 +1,5 @@
 const { GraphQLScalarType, Kind } = require("graphql");
+
 // the below code assumes the backend represents a date with the Date JavaScript object
 // create an instance of a GraphQLScalarType class for handling our dates
 // the methods describe how Apollo Server interacts with the scalar in every scenario
@@ -7,7 +8,7 @@ const dateScalar = new GraphQLScalarType({
   description: "Date custom scalar type",
   // serialize method converts the scalar's backend representation to a JSON-compatible format so Apollo Server
   // can include it in a operation's response. In this case, we take the value stored in backend (number of milliseconds)
-  // elapsed since the epoch (Jan 1, 1970, UTC)) and conver it to a date string
+  // elapsed since the epoch (Jan 1, 1970, UTC)) and convert it to a date string
   serialize(value) {
     // note: you can use other Date methods to tweak the output here
     // i.e. value.toLocaleDateString() will give just the date in MM/DD/YYYY format
@@ -27,6 +28,16 @@ const dateScalar = new GraphQLScalarType({
   },
 });
 
+const imgBinDataScalar = new GraphQLScalarType({
+  name: "ImgBinData",
+  description:
+    "Custom scalar for storing image bin data in form of Nodejs Buffer type",
+  serialize: (value) => value,
+  parseValue: (value) => Buffer.from(value, "base64"),
+  parseLiteral: (ast) => Buffer.from(ast.value, "base64"),
+});
+
 module.exports = {
-    dateScalar
-}
+  dateScalar,
+  imgBinDataScalar,
+};
