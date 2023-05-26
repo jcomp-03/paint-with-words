@@ -126,6 +126,8 @@ const typeDefs = gql`
     imagesByUsername(username: String!): [Image!]
     "Query to get a single image by its id"
     imageByImageId(_id: ID!): Image
+    "Query to get all prompts by a single user"
+    promptsByUsername(username: String!): [Prompt!]
   }
 
   type Mutation {
@@ -146,11 +148,13 @@ const typeDefs = gql`
       prompt: String!
       n: Int!
       size: String!
-    ): OpenAiImageResponse
+    ): User
     "Mutation for adding an image to a user's collection"
     addImageToUserCollection: User
-    "Mutation for removing an image from a user's collection"
+    "Mutation for deleting an image from a user's collection"
     deleteAnImage(imgId: ID!): Image
+    "Mutation for deleting multiple images from a user's collection"
+    deleteSomeImages(imgIdArray: [ID!]): [Image]
   }
 `;
 

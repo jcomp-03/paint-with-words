@@ -1,4 +1,4 @@
-const { User, Image } = require("../models");
+const { User, Image, Prompt } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 
 // import signToken function
@@ -24,7 +24,7 @@ const resolvers = {
         return userData;
       }
 
-      throw new AuthenticationError("Not logged in");
+      throw new AuthenticationError("You need to be logged in!");
     },
     user: async (parent, { username }) => {
       return User.findOne({ username })
@@ -51,6 +51,10 @@ const resolvers = {
     imageByImageId: async (parent, { _id }) => {
       const params = _id ? { _id } : {};
       return Image.findById(params);
+    },
+    promptsByUsername: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return Prompt.find(params).sort({ createdAt: -1 });
     },
   },
 
@@ -96,21 +100,6 @@ const resolvers = {
         console.log("----- Error! Resolver getAssemblyAIToken -----\n", error);
       }
     },
-    // singleUpload: async (parent, { file }) => {
-    //   const { createReadStream, filename, mimetype, encoding } = await file;
-
-    //   // Invoking the `createReadStream` will return a Readable Stream.
-    //   // See https://nodejs.org/api/stream.html#stream_readable_streams
-    //   const stream = createReadStream();
-
-    //   // This is purely for demonstration purposes and will overwrite the
-    //   // local-file-output.txt in the current working directory on EACH upload.
-    //   const out = require('fs').createWriteStream('local-file-output.txt');
-    //   stream.pipe(out);
-    //   await finished(out);
-
-    //   return { filename, mimetype, encoding };
-    // },
     createSomeImages: async (parent, { prompt, n, size }, context, info) => {
       try {
         // if the user property of context exists (it should exist if login was successful),
@@ -118,22 +107,48 @@ const resolvers = {
         if (context.user) {
           const response = await openAiInstance.createImage(prompt, n, size);
           const { data } = response.status === 200 ? response : null;
-          const { created: createdOn, data: imageArray } = data ? data : null;
-          // add properties to each image object and then create new documents in Image collection
-          imageArray.forEach((imgObj) => {
-            // assign image's description to be prompt that was used
+          const { created: createdOn, data: imageDataArray } = data
+            ? data
+            : null;
+
+          // add properties to each image object that was returned in data
+          imageDataArray.forEach((imgObj) => {
             imgObj.description = prompt;
-            // assign image's size to be the size that was used
             imgObj.size = size;
-            // assign image's timestamp to be createdOn; noticed timestamp was off, so had to add triple zeros to bring it to current day/time
-            imgObj.createdOn = createdOn + "000";
-            // assign image owner to the currently logged-in user, pulled from context!
+            imgObj.createdOn = createdOn + "000"; // observed timestamp was off; added zeros to bring to current day/time
             imgObj.username = context.user.username;
           });
-          const someResponse = await Image.create(imageArray);
-          console.log('someResponse is', someResponse);
-          return response;
+
+          // create new documents in Image collection
+          const imageDocsArray = await Image.create(imageDataArray);
+          // collect the new image ids
+          const imgIds = imageDocsArray.map((imgObj) => imgObj["_id"]);
+          // configure prompt objects for create method
+          const newPrompts = imageDocsArray.map((img) => {
+            return {
+              promptText: img.description,
+              createdOn: img.createdOn,
+              username: context.user.username,
+            };
+          });
+          const promptDocsArray = await Prompt.create(newPrompts);
+          // collect the new prompt ids
+          const promptIds = promptDocsArray.map(
+            (promptObj) => promptObj["_id"]
+          );
+          // update the current user's document with the image and prompt ids...
+          const updatedUser = await User.findOneAndUpdate(
+            { username: context.user.username },
+            { $addToSet: { images: imgIds, previousPrompts: promptIds } },
+            { returnDocument: "after" }
+          )
+            .populate("images")
+            .populate("previousPrompts");
+          // return updated user document
+          return updatedUser;
         }
+
+        throw new AuthenticationError("You need to be logged in!");
       } catch (error) {
         console.log("----- Error! Resolver createSomeImages -----\n", error);
       }
@@ -149,8 +164,22 @@ const resolvers = {
           }
           return response;
         }
+        throw new AuthenticationError("You need to be logged in!");
       } catch (error) {
-        console.log("----- Error! Resolver removeAnImage -----\n", error);
+        console.log("----- Error! Resolver deleteAnImage -----\n", error);
+      }
+    },
+    deleteSomeImages: async (parent, { imgIdArray }, context, info) => {
+      try {
+        if (context.user) {
+          let response = imgIdArray.map(
+            async (imgId) => await Image.findByIdAndDelete(imgId)
+          );
+          return response;
+        }
+        throw new AuthenticationError("You need to be logged in!");
+      } catch (error) {
+        console.log("----- Error! Resolver deleteSomeImages -----\n", error);
       }
     },
   },
